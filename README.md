@@ -1,4 +1,7 @@
 # perceptia-clients
+[![Build Status](https://dev.azure.com/uw-thalesians/Capstone%202019/_apis/build/status/uw-thalesians.perceptia-clients?branchName=master)](https://dev.azure.com/uw-thalesians/Capstone%202019/_build/latest?definitionId=2&branchName=master)
+
+
 This repository contains the source files for the clients of the Perceptia application. 
 
 ## Getting Started
