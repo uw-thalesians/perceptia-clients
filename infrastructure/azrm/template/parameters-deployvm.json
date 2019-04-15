@@ -79,7 +79,7 @@
             "value": "web-ip"
         },
         "publicIpAddressType": {
-            "value": "Dynamic"
+            "value": "Static"
         },
         "publicIpAddressSku": {
             "value": "Basic"
@@ -100,7 +100,7 @@
             "value": "azureuser"
         },
         "adminPublicKey": {
-            "value": null
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDLdIeSulhPMVjgVI1K59Sh9SR/VdKLFZtAodmb2xqfKGjCrzc9006TiMG2S3WPpvRcx5t32SASjY8Blleo6qpP30MrEIa6PgCX5i354FheLV/qt2IWck3sRXkx7A4xvdmsyta3ctAMQlnIDF2r8eGagtIrId9HPgcVKw7liN1MgoNuS/W313meDUaByn6hlFFBG0GPNUY2wMmETK4b9YDW2D3eqI83k7LujiIx6mU6b/rb0PQV6C6+jm7l7OMsuJay3OtMltmPhDX9hlxBrydO8xbhRXnb81cSMUEr0a0Vqaj9JOyCKcTZP/H2nTEvmjeuLrlCNHwdIDPrDE0dVpb87XZQ3B6M8byF/dmwRvoEje/di0xJgSSsYoAsj0L+g1rZe5DgslvejFPCTCO6Wc19n0JqtkDfCql8siQc2XthQhkZz8nR5qTugk8GeBFJnGNk5YPGog3qQvPFW4nItv8jycdbdhplIa7jXOTcri4UdkN9BwfoEyrACcyq2IBGtV3KWuqBWc8k2Vcp0bScTusZsKz95K6OZcBSAUbwlREDfGpZ4V+xoNBiWzmp1LP9BXlAttSP+W8GfKuBhquvpkf2lhB4g8KRUXtkUSk9zVkAJDOhObKYVz78tQUBL9B6t4yzcmoePXgTMqV56r/sFLD1iyD04F/pFiPmSKKGIIac1w== chriskites@gmail.com"
         },
         "diagnosticsStorageAccountName": {
             "value": "perceptiawebdiag"
