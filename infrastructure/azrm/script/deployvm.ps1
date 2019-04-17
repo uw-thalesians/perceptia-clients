@@ -1,5 +1,5 @@
 New-AzResourceGroupDeployment `
+-ResourceGroupName perceptiaWeb `
 -Name PerceptiaWebVmDeployment `
--Location "westus2" `
--TemplateFile ..\template\deployrg.json
+-TemplateFile ..\template\deployvm.json `
 -TemplateParameterFile ..\template\parameters-deployvm.json

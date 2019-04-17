@@ -78,6 +78,9 @@
         "publicIpAddressName": {
             "value": "web-ip"
         },
+        "publicIpAddressNameDev": {
+            "value": "web-ip-dev"
+        },
         "publicIpAddressType": {
             "value": "Static"
         },

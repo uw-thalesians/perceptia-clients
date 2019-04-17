@@ -1,19 +1,76 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# File: azure-pipelines.yml
+# Main AZP YAML file
+
+name: $(Build.BuildId)
+
+variables:
+  - group: Common
+  - group: Web
+  # Client Variables
+  - name: PerceptiaOneVersion
+    value: '0.0.1'
+  - name: PerceptiaOneImageQualified
+    value: '$(DockerHubOrg)/$(PerceptiaOneImageName)'
+
+  
 
 trigger:
-- master
+  branches:
+    include:
+    - master
+    - develop
+    - feature/*
+    - hotfix/*
+  paths:
+    include:
+      - infrastructure/azp/*
+      - '*'
+    exclude:
+    - README.md
+    - infrastructure/*
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+pr:
+  autoCancel: true
+  branches:
+    include:
+    - master
+    - develop
+  paths:
+    exclude:
+    - README.md
+    - infrastructure/*
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+jobs:
+- job: 'TestPerceptiaOneUnitTests'
+- job: 'BuildPerceptiaOneImage'
+  variables:
+  - name: ImageTagVersion
+    value: '$(PerceptiaOneImageQualified):$(PerceptiaOneVersion)'
+  - name: ImageTagVersionBuildId
+    value: '$(ImageTagVersion)-build-$(Build.BuildId)'
+  - name: ImageTagVersionBuildIdBranch
+    value: '$(ImageTagVersionBuildId)-branch-$(Build.SourceBranchName)'
+  - name: ImageTagVersionLatestBranch
+    value: '$(ImageTagVersion)-build-latest-branch-$(Build.SourceBranchName)'
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  dependsOn: 'TestPerceptiaOneUnitTests'
+  condition: and(succeeded(), eq(variables['forceBuild'], 'true'))
+  steps:
+  - task: Docker@1
+    displayName: 'Build image'
+    inputs:
+      command: Build an image
+      dockerFile: '$(system.defaultWorkingDirectory)/perceptia-one/Dockerfile'
+      imageName: $(PerceptiaOneImageQualified)
+      qualifyImageName: false
+      arguments: |
+        "--build-arg REACT_APP_WEB_SERVER_HOST=$(WebServerHost)"
+        "--build-arg REACT_APP_API_SERVER_HOST=$(ApiServerHost)"
+  - template: 'infrastructure/azp/template/step/dockerStandardTagPush.yml'
+    parameters:
+      qualifiedImageName: $(PerceptiaOneImageQualified)
+      versionLatestBranchTag: $(ImageTagVersionLatestBranch)
+      versionBuildIdBranchTag: $(ImageTagVersionBuildIdBranch)
+      versionTag: $(ImageTagVersion)
+      versionBuildIdTag: $(ImageTagVersionBuildId)

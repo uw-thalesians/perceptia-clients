@@ -29,6 +29,9 @@
             "publicIpAddressName": {
                 "type": "string"
             },
+            "publicIpAddressNameDev": {
+                "type": "string"
+            },
             "publicIpAddressType": {
                 "type": "string"
             },
@@ -102,6 +105,7 @@
                         {
                             "name": "ipconfig1",
                             "properties": {
+                                "primary":true,
                                 "subnet": {
                                     "id": "[variables('subnetRef')]"
                                 },
@@ -110,7 +114,19 @@
                                     "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName'))]"
                                 }
                             }
-                        }
+                        },
+                        {
+                                "name": "ipconfig2",
+                                "properties": {
+                                    "subnet": {
+                                        "id": "[variables('subnetRef')]"
+                                    },
+                                    "privateIPAllocationMethod": "Dynamic",
+                                    "publicIpAddress": {
+                                        "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', parameters('publicIpAddressNameDev'))]"
+                                    }
+                                }
+                            }
                     ],
                     "networkSecurityGroup": {
                         "id": "[variables('nsgId')]"
@@ -149,6 +165,21 @@
             },
             {
                 "name": "[parameters('publicIpAddressName')]",
+                "type": "Microsoft.Network/publicIpAddresses",
+                "apiVersion": "2018-08-01",
+                "location": "[parameters('location')]",
+                "properties": {
+                    "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
+                },
+                "sku": {
+                    "name": "[parameters('publicIpAddressSku')]"
+                },
+                "tags": {
+                    "use": "capstone"
+                }
+            },
+            {
+                "name": "[parameters('publicIpAddressNameDev')]",
                 "type": "Microsoft.Network/publicIpAddresses",
                 "apiVersion": "2018-08-01",
                 "location": "[parameters('location')]",
