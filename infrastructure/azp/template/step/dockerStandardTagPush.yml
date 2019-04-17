@@ -20,7 +20,7 @@ steps:
         ${{ parameters.versionLatestBranchTag }}
   - task: Docker@1
     displayName: 'Add production tags'
-    condition: eq(variable[ 'productionTags'], 'true')
+    condition: eq(variables[ 'productionTags'], 'true')
     inputs:
       command: Tag image
       imageName: ${{ parameters.qualifiedImageName }}
@@ -48,14 +48,14 @@ steps:
       qualifyImageName: false
   - task: Docker@1
     displayName: Push Version Tag
-    condition: eq(variable[ 'productionTags'], 'true')
+    condition: eq(variables[ 'productionTags'], 'true')
     inputs:
       command: Push an image
       imageName: ${{ parameters.versionTag }}
       qualifyImageName: false
   - task: Docker@1
     displayName: Push Version BuildId Tag
-    condition: eq(variable[ 'productionTags'], 'true')
+    condition: eq(variables[ 'productionTags'], 'true')
     inputs:
       command: Push an image
       imageName: ${{ parameters.versionBuildIdTag }}
