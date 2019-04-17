@@ -48,7 +48,7 @@ steps:
       qualifyImageName: false
   - task: Docker@1
     displayName: Push Version Tag
-    condition: false eq(variable[ 'productionTags'], 'true')
+    condition: eq(variable[ 'productionTags'], 'true')
     inputs:
       command: Push an image
       imageName: ${{ parameters.versionTag }}
