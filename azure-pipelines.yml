@@ -58,15 +58,8 @@ jobs:
   dependsOn: 'TestPerceptiaOneUnitTests'
   condition: and(succeeded(), or(eq(variables['forceBuild'], 'true'), not(startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/'))))
   steps:
-  - bash: |
-      "docker build -f $(system.defaultWorkingDirectory)/perceptia-one/Dockerfile \"
-      "--build-arg REACT_APP_WEB_SERVER_HOST=$(WebServerHost) \"
-      "--build-arg REACT_APP_API_SERVER_HOST=$(ApiServerHost) \"
-      "-t $(PerceptiaOneImageQualified) \"
-      "/home/vsts/work/1/s/perceptia-one"
   - task: Docker@1
     displayName: 'Build image'
-    condition: false # Disable for testing
     inputs:
       command: Build an image
       dockerFile: '$(system.defaultWorkingDirectory)/perceptia-one/Dockerfile'

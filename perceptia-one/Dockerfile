@@ -1,4 +1,6 @@
 FROM node:10.15.3 as builder
+ARG REACT_APP_WEB_SERVER_HOST
+ARG REACT_APP_API_SERVER_HOST
 WORKDIR /usr/src/app
 COPY perceptia/package-lock.json perceptia/package.json ./
 RUN npm install
