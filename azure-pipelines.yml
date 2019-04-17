@@ -6,6 +6,7 @@ name: $(Build.BuildId)
 variables:
   - group: Common
   - group: Web
+  - group: WebDevelopment
   # Client Variables
   - name: PerceptiaOneVersion
     value: '0.0.1'
@@ -55,7 +56,7 @@ jobs:
   pool:
     vmImage: 'Ubuntu-16.04'
   dependsOn: 'TestPerceptiaOneUnitTests'
-  condition: and(succeeded(), eq(variables['forceBuild'], 'true'))
+  condition: and(succeeded(), or(eq(variables['forceBuild'], 'true'), not(startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/'))))
   steps:
   - task: Docker@1
     displayName: 'Build image'
