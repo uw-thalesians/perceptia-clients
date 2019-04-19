@@ -7,18 +7,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <p>Built for the {process.env.NODE_ENV} environment</p>
+          <p>Web server host: {process.env.REACT_APP_WEB_SERVER_HOST}</p>
+          <p>Api server host: {process.env.REACT_APP_API_SERVER_HOST}</p>
         </header>
       </div>
     );
