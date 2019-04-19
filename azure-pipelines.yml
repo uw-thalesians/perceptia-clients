@@ -75,4 +75,4 @@ jobs:
       versionBuildIdBranchTag: $(ImageTagVersionBuildIdBranch)
       versionTag: $(ImageTagVersion)
       versionBuildIdTag: $(ImageTagVersionBuildId)
-      tagProduction: or(eq(variables[ 'productionTags'], 'true'), or(startsWith(variables['Build.SourceBranch'], 'refs/heads/master/')), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'))))
+      tagProduction: or(eq(variables[ 'productionTags'], 'true'), or(startsWith(variables['Build.SourceBranch'], 'refs/heads/master/'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
