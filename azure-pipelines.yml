@@ -6,7 +6,7 @@ name: $(Build.BuildId)
 variables:
   - group: Common
   - group: Web
-  - group: WebDevelopment
+  - group: WebDevelopment # Change for release to production
   # Client Variables
   - name: PerceptiaOneVersion
     value: '0.0.1'
@@ -22,6 +22,7 @@ trigger:
     - develop
     - feature/*
     - hotfix/*
+    - release/*
   paths:
     include:
       - infrastructure/azp/*
@@ -36,6 +37,7 @@ pr:
     include:
     - master
     - develop
+    - release/*
   paths:
     exclude:
     - README.md
@@ -73,3 +75,4 @@ jobs:
       versionBuildIdBranchTag: $(ImageTagVersionBuildIdBranch)
       versionTag: $(ImageTagVersion)
       versionBuildIdTag: $(ImageTagVersionBuildId)
+      tagProduction: or(eq(variables[ 'productionTags'], 'true'), or(startsWith(variables['Build.SourceBranch'], 'refs/heads/master/')), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'))))
