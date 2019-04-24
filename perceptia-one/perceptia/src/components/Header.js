@@ -4,11 +4,14 @@ import NavBar from './NavBar'
 class Header extends React.Component {
     render() {
        return (
-          <h1>Perceptia</h1>
-         //  <div>
-         //     <h1>Header</h1>
-         //     <NavBar />
-         //  </div>
+          <div>
+             <h1>Header</h1>
+             <NavBar />
+          </div>
+
+
+
+         
 
          // <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
          // <a class="navbar-brand" href="#">
