@@ -1,23 +1,42 @@
-import React from 'react'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
+import React from 'react';
+import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
-const NavBar = () => {
-    return(
-        <div>
-        <AppBar position="static">
-            <Toolbar>
-                <Typography variant="title" color="inherit">
-                    Perceptia: 
-                    A personalized studying tool for computer assisted learning and dynamic assessments
-                </Typography>
-            </Toolbar>
+const styles = theme => ({
+    appBar: {
+      position: 'relative',
+    },
+    toolbarTitle: {
+      flex: 1,
+    }
+});
+
+function NavBar(props) {
+    const { classes } = props;
+  
+    return (
+        <AppBar position="static" color="default" className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+              Perceptia
+            </Typography>
+            <Button color="primary" variant="outlined">
+              Sign In
+            </Button>
+            <Button color="primary" variant="outlined">
+              Sign Up
+            </Button>
+          </Toolbar>
         </AppBar>
-        </div>
-    )
-}
-export default NavBar;
+    );
+  }
+  
+  NavBar.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+  
+  export default withStyles(styles)(NavBar);

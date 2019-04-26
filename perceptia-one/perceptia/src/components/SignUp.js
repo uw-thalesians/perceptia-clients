@@ -1,131 +1,89 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import React from "react";
-import { Link } from "react-router-dom";
-import constants from "./constants";
+const styles = theme => ({
+  main: {
+    width: 'auto',
+    display: 'block',
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 400,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    marginTop: theme.spacing.unit * 8,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', 
+    marginTop: theme.spacing.unit,
+  },
+  submit: {
+    marginTop: theme.spacing.unit * 3,
+  },
+});
 
+function SignUp(props) {
+  const { classes } = props;
 
-export default class SignUpView extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: "",
-            confirmPassword: "",
-            displayName: "",
-            errMsg: "",
-            photoURL: "https://www.gravatar.com/avatar/"
-        };
-    }
-
-
-    componentDidMount() {
-        this.authUnsub = firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                this.props.history.push(constants.routes.general); //Use constants
-              } 
-        });
-    }
-    componentWillUnmount() {
-        this.authUnsub();
-    }
-
-    handleSubmit(evt) { //Should work, but need to verify
-        evt.preventDefault();
-        if (this.state.password !== this.state.confirmPassword) {
-            this.setState({ errMsg: "Password does not match" });
-        } else if (this.state.password.length < 6) {
-            this.setState({ errMsg: "Password must be at least 6 digits long" });
-        } else {
-            this.setState({ errMsg: "" });
-
-            let hash = md5(this.state.email.trim().toLowerCase());
-            this.setState({ photoURL : this.state.photoURL + hash});
-
-            firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-                .then(user => {
-                    return user.updateProfile({
-                        displayName: this.state.displayName,
-                        photoURL: this.state.photoURL
-                    });
-                })
-                .then(() => this.props.history.push(constants.routes.general))
-                .catch(err => this.setState({ errMsg: err.message }));
-
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                <div className="container">
-                    <h1>Sign Up</h1>
-                </div>
-                <div className="container">
-
-                    {this.state.errMsg ?
-                        <div className="alert alert-danger">
-                            {this.state.errMsg}
-                        </div>
-                        : undefined}
-
-                    <form onSubmit={evt => this.handleSubmit(evt)}>
-
-                        <div className="form-group">
-                            <label htmlFor="email">Email:</label>
-                            <input id="email"
-                                type="email"
-                                className="form-control"
-                                value={this.state.email}
-                                onInput={evt => this.setState({ email: evt.target.value})}
-                                placeholder="enter your email"
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="displayName">Display Name:</label>
-                            <input id="displayName"
-                                type="text"
-                                className="form-control"
-                                value={this.state.displayName}
-                                onInput={evt => this.setState({ displayName: evt.target.value })}
-                                placeholder="enter your display name"
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="password">Password:</label>
-                            <input id="password"
-                                type="password"
-                                className="form-control"
-                                value={this.state.password}
-                                onInput={evt => this.setState({ password: evt.target.value })}
-                                placeholder="enter your password"
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="confirmPassword">Confirm Password:</label>
-                            <input id="confirmPassword"
-                                type="password"
-                                className="form-control"
-                                value={this.state.confirmPassword}
-                                onInput={evt => this.setState({ confirmPassword: evt.target.value })}
-                                placeholder="re-enter your password"
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <button type="submit" className="btn btn-primary">Sign Up</button>
-                        </div>
-
-                    </form>
-                    <p>Already have an account? <Link to={constants.routes.signin}>Sign In</Link></p>
-                </div>
-            </div>
-        );
-    }
+  return (
+    <main className={classes.main}>
+      <CssBaseline />
+      <Paper className={classes.paper}>
+        <Typography component="h1" variant="h5">
+          Create an account
+        </Typography>
+        <form className={classes.form}>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="email">Email Address</InputLabel>
+            <Input id="email" name="email" autoComplete="email" autoFocus />
+          </FormControl>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <Input name="password" type="password" id="password" autoComplete="current-password" />
+          </FormControl>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="password">Re-enter Password</InputLabel>
+            <Input name="confirmation" type="confirmation" id="confirmation"/>
+          </FormControl>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign Up
+          </Button>
+        </form>
+      </Paper>
+    </main>
+  );
 }
+
+SignUp.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(SignUp);
