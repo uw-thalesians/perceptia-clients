@@ -25,7 +25,6 @@ class App extends Component {
       //   </header>
       // </div>
       <QuizInfo />
-      
     );
   }
 }
