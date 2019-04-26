@@ -74,3 +74,7 @@ Use the following variables to configure the client for the given environment.
 `REACT_APP_WEB_SERVER_HOST=<hostname>` (REQUIRED) identifies the host portion the site is being served from. Replace \<hostname\> with the appropriate ip or hostname such as localhost
 
 `REACT_APP_API_SERVER_HOST=<hostname>` (REQUIRED) indicates the hostname that should be used for all requests to the API server. Replace \<hostname\> with the appropriate ip or hostname
+
+`REACT_APP_API_SERVER_SCHEME=<scheme>` (REQUIRED) indicates the scheme that should be used for all requests to the API server. Replace \<scheme\> with the appropriate scheme, such as "https"
+
+`REACT_APP_API_SERVER_PORT=<port>` (REQUIRED) indicates the port that should be used for all requests to the API server. Replace \<port\> with the appropriate port, such as "443" for default https
