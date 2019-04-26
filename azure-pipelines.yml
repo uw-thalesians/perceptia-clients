@@ -67,7 +67,7 @@ jobs:
       dockerFile: '$(system.defaultWorkingDirectory)/perceptia-one/Dockerfile'
       imageName: $(PerceptiaOneImageQualified)
       qualifyImageName: false
-      arguments: "--build-arg REACT_APP_WEB_SERVER_HOST=$(WebServerHost) --build-arg REACT_APP_API_SERVER_HOST=$(ApiServerHost)"
+      arguments: "--build-arg REACT_APP_WEB_SERVER_HOST=$(WebServerHost) --build-arg REACT_APP_API_SERVER_HOST=$(ApiServerHost) --build-arg REACT_APP_API_SERVER_PORT=$(ApiServerPort) --build-arg REACT_APP_API_SERVER_SCHEME=$(ApiServerScheme)"
   - template: 'infrastructure/azp/template/step/dockerStandardTagPush.yml'
     parameters:
       qualifiedImageName: $(PerceptiaOneImageQualified)
