@@ -1,5 +1,8 @@
 Param (
-    [String]$ApiServerHost = "dev.perceptia.info"
+    [String]$ApiServerHost = "api.dev.perceptia.info",
+    [String]$ApiServerPort = ":443",
+    [String]$ApiServerScheme = "https://"
+
 )
 
 Write-Host "Preparing to build the PerceptiaOne image"
@@ -13,11 +16,16 @@ Set-Variable -Name PERCEPTIAONE_CONTAINER_NAME -Value "perceptiaone"
 
 Set-Variable -Name REACT_APP_WEB_SERVER_HOST -Value "localhost"
 Set-Variable -Name REACT_APP_API_SERVER_HOST -Value $ApiServerHost
+Set-Variable -Name REACT_APP_API_SERVER_PORT -Value $ApiServerPort
+Set-Variable -Name REACT_APP_API_SERVER_Scheme -Value $ApiServerScheme
 
 Write-Host "Building the container image..."
 docker build --tag "${PERCEPTIAONE_IMAGE_AND_TAG}" `
---build-arg REACT_APP_WEB_SERVER_HOST=$REACT_APP_API_SERVER_HOST `
---build-arg REACT_WEB_SERVER_HOST=REACT_APP_WEB_SERVER_HOST .
+--build-arg REACT_APP_WEB_SERVER_HOST=$REACT_APP_WEB_SERVER_HOST `
+--build-arg REACT_APP_API_SERVER_HOST=$REACT_APP_API_SERVER_HOST `
+--build-arg REACT_APP_API_SERVER_PORT=$REACT_APP_API_SERVER_PORT `
+--build-arg REACT_APP_API_SERVER_SCHEME=$REACT_APP_API_SERVER_SCHEME `
+.
 
 Set-Variable -Name PERCEPTIAONE_TLSMOUNTSOURCE -Value "$(Get-Location)\encrypt\"
 
