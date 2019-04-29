@@ -59,7 +59,7 @@ First, you will need to follow the instructions in the encrypt directory to gene
 
 Now that the certificate and key have been created, you should be able to run the `localStartExample.ps1` script to build the container and run it.
 
-Note, the default api server used by the client is `dev.perceptia.info`. If you want to use a local api server you can provide the host portion to the script using the -ApiServerHost option.
+Note, the default api server used by the client is `api.dev.perceptia.info`. If you want to use a local api server you can provide the host portion to the script using the -ApiServerHost, -ApiServerPort and -ApiServerScheme option.
 
 ### Build Configuration
 
@@ -69,7 +69,7 @@ Note, the default api server used by the client is `dev.perceptia.info`. If you 
 
 #### Environment Variables
 
-Use the following variables to configure the client for the given environment.
+Use the following variables to configure the client for the given environment during the build process (passed as build args to docker build command).
 
 `REACT_APP_WEB_SERVER_HOST=<hostname>` (REQUIRED) identifies the host portion the site is being served from. Replace \<hostname\> with the appropriate ip or hostname such as localhost
 

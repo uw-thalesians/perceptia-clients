@@ -1,7 +1,7 @@
 Param (
     [String]$ApiServerHost = "api.dev.perceptia.info",
-    [String]$ApiServerPort = ":443",
-    [String]$ApiServerScheme = "https://"
+    [String]$ApiServerPort = "443",
+    [String]$ApiServerScheme = "https"
 
 )
 
@@ -25,6 +25,7 @@ docker build --tag "${PERCEPTIAONE_IMAGE_AND_TAG}" `
 --build-arg REACT_APP_API_SERVER_HOST=$REACT_APP_API_SERVER_HOST `
 --build-arg REACT_APP_API_SERVER_PORT=$REACT_APP_API_SERVER_PORT `
 --build-arg REACT_APP_API_SERVER_SCHEME=$REACT_APP_API_SERVER_SCHEME `
+--no-cache `
 .
 
 Set-Variable -Name PERCEPTIAONE_TLSMOUNTSOURCE -Value "$(Get-Location)\encrypt\"
@@ -36,6 +37,7 @@ Write-Host "Running the container..."
 docker run `
 --detach `
 --name ${PERCEPTIAONE_CONTAINER_NAME} `
+--publish "8080:80" `
 --publish "4443:443" `
 --restart on-failure `
 --mount type=bind,source="$PERCEPTIAONE_TLSMOUNTSOURCE",target="/etc/sitecert",readonly `
