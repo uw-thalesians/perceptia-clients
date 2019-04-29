@@ -14,17 +14,19 @@ import QuizInfo from './components/QuizInfo'
 
 import NavBar from './components/NavBar'
 
+import constants from './components/constants'
+
 class App extends Component {
   render() {
     return (
-      // <div className="App">
-      //   <header className="App-header">
-      //     <p>Built for the {process.env.NODE_ENV} environment</p>
-      //     <p>Web server host: {process.env.REACT_APP_WEB_SERVER_HOST}</p>
-      //     <p>Api server host: {process.env.REACT_APP_API_SERVER_HOST}</p>
-      //   </header>
-      // </div>
-      <QuizInfo />
+      <div className="App">
+        <header className="App-header">
+          <p>Built for the {process.env.NODE_ENV} environment</p>
+          <p>Web server host: {process.env.REACT_APP_WEB_SERVER_HOST}</p>
+          <p>API REF: {constants.api.url}</p>
+        </header>
+        
+      </div>
     );
   }
 }

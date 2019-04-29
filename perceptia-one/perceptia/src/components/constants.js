@@ -1,4 +1,9 @@
 
+let api_ref = process.env.REACT_APP_API_SERVER_SCHEME 
+            + "://" + process.env.REACT_APP_API_SERVER_HOST
+            + ":" + process.env.REACT_APP_API_SERVER_PORT;
+
+
 export default {
     routes: {
         signin: "/signin",
@@ -7,7 +12,7 @@ export default {
     },
 
     api: {
-        url: "process.env.REACT_APP_API_SERVER_HOSTs"
+        url: api_ref
     }
 
 }
