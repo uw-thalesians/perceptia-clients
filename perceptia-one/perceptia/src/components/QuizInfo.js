@@ -12,32 +12,103 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
+const styles = {
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+};
+
 class QuizInfo extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      quiz:null
+      quiz:null,
+      summary:null,
+      shortSummary:null
     };
   }
 
-  // componentDidMount() {
-  //   fetch('http://students.washington.edu/long27km/any_quiz/v1/list')
-  //     // .then(response => response.json())
-  //     // .then(result => console.log(result.quizzes[0].keyword))
-  //     .then(response => response.json())
-  //     .then(result => this.state())
-  // }
+  componentDidMount() {
+
+    var result = fetch('http://students.washington.edu/long27km/any_quiz/v1/list')
+      .then(response => response.json())
+      .then(response => this.setState({
+        quiz: response.quizzes[10].keyword
+    }));
+
+    result.then(response => {
+      var name = this.state.quiz;
+
+      fetch('http://students.washington.edu/long27km/any_quiz/v1/read/' + name)
+        .then(r => r.json())
+        .then(r => this.setState({
+          summary: r.summary
+        }))
+
+    });
+
+    // fetch('http://students.washington.edu/long27km/any_quiz/v1/list')
+    //   .then(response => response.json())
+    //   .then(response => this.setState({
+    //     quiz: response.quizzes[0].keyword
+    // }));
+
+    // fetch('http://students.washington.edu/long27km/any_quiz/v1/read/' + this.state.quiz)
+    //   .then(response => response.json())
+    //   .then(response => this.setState({
+    //     summary: response.summary
+    // }));
+
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.summary != prevState.summary) {
+      this.setState({
+        shortSummary: this.state.summary.substring(0, 250) + "..."
+      })
+    }
+  }
 
   render() {
-    return (
-      <div> RIP </div>
+    const { classes } = this.props;
+    // const shortSummary = this.state.summary.substring(0, 250) + "...";
+      return (
+        <Card className={classes.card}>
+          <CardMedia
+            className={classes.media}
+            image={require('./img/placeholder.png')}
+            title="placeholder"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {this.state.quiz}
+            </Typography>
+            <Typography component="p">
+              {this.state.shortSummary}
+            </Typography>
+          </CardContent>
+        <CardActions>
+          <Button size="small" color="primary">
+            Detail
+          </Button>
+          <Button size="small" color="primary">
+            Take Quiz Now!
+          </Button>
+        </CardActions>
+      </Card>
     );
   }
 }
 
-export default QuizInfo;
+export default withStyles(styles)(QuizInfo);
+
+
 
 // const styles = {
 //     card: {
