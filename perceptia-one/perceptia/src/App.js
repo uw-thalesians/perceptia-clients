@@ -27,7 +27,9 @@ class App extends Component {
           <p>Web server host: {process.env.REACT_APP_WEB_SERVER_HOST}</p>
           <p>API REF: {constants.api.url}</p>
         </header> */}
-        <QuizInfo />
+        <NavBar />
+        <QuizGallery />
+        <Footer />
       </div>
     );
   }

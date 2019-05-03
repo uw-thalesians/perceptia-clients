@@ -15,6 +15,8 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = {
   card: {
     maxWidth: 345,
+    display: 'flex',
+    flexDirection: 'column'
   },
   media: {
     height: 140,
@@ -24,8 +26,7 @@ const styles = {
 class QuizInfo extends React.Component {
 
   constructor(props) {
-    super(props);
-
+    super(props)
     this.state = {
       quiz:null,
       summary:null,
@@ -33,51 +34,35 @@ class QuizInfo extends React.Component {
     };
   }
 
-  componentDidMount() {
-
-    var result = fetch('http://students.washington.edu/long27km/any_quiz/v1/list')
-      .then(response => response.json())
-      .then(response => this.setState({
-        quiz: response.quizzes[10].keyword
-    }));
-
-    result.then(response => {
-      var name = this.state.quiz;
-
-      fetch('http://students.washington.edu/long27km/any_quiz/v1/read/' + name)
-        .then(r => r.json())
-        .then(r => this.setState({
-          summary: r.summary
-        }))
-
-    });
-
-    // fetch('http://students.washington.edu/long27km/any_quiz/v1/list')
-    //   .then(response => response.json())
-    //   .then(response => this.setState({
-    //     quiz: response.quizzes[0].keyword
-    // }));
-
-    // fetch('http://students.washington.edu/long27km/any_quiz/v1/read/' + this.state.quiz)
-    //   .then(response => response.json())
-    //   .then(response => this.setState({
-    //     summary: response.summary
-    // }));
-
-
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.summary != prevState.summary) {
-      this.setState({
-        shortSummary: this.state.summary.substring(0, 250) + "..."
-      })
+  static getDerivedStateFromProps(nextProps) {
+    return {
+      quiz:nextProps.quizName
     }
   }
 
+  componentDidMount() {
+      fetch('http://students.washington.edu/long27km/any_quiz/v1/read/' + this.state.quiz)
+        .then(response => response.json())
+        .then(response => this.setState({
+          summary: response.summary,
+          shortSummary: response.summary.substring(0, 250) + "..."
+        }))
+  }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.state.quiz != prevState.quiz) {
+  //     fetch('http://students.washington.edu/long27km/any_quiz/v1/read/' + this.state.quiz)
+  //       .then(response => response.json())
+  //       .then(response => this.setState({
+  //         summary: response.summary,
+  //         shortSummary: response.summary.substring(0, 250) + "..."
+  //       }))
+  //   }
+  // }
+
   render() {
     const { classes } = this.props;
-    // const shortSummary = this.state.summary.substring(0, 250) + "...";
+    console.log(this.state.shortSummary)
       return (
         <Card className={classes.card}>
           <CardMedia
@@ -155,3 +140,27 @@ export default withStyles(styles)(QuizInfo);
   
 // export default withStyles(styles)(QuizInfo);
 
+  // componentDidMount() {
+  //   fetch('http://students.washington.edu/long27km/any_quiz/v1/read/' + this.state.quiz)
+  //     .then(r => r.json())
+  //     .then(r => this.setState({
+  //       summary: r.summary
+  //   }))
+
+  //   var result = fetch('http://students.washington.edu/long27km/any_quiz/v1/list')
+  //     .then(response => response.json())
+  //     .then(response => this.setState({
+  //       quiz: response.quizzes[10].keyword
+  //   }));
+
+  //   result.then(response => {
+  //     var name = this.state.quiz;
+
+  //     fetch('http://students.washington.edu/long27km/any_quiz/v1/read/' + name)
+  //       .then(r => r.json())
+  //       .then(r => this.setState({
+  //         summary: r.summary
+  //       }))
+
+  //   });
+  // }

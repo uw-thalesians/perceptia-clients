@@ -71,9 +71,6 @@ function SignIn(props) {
     <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
-        {/* <Avatar className={classes.avatar}> */}
-            <SVG />
-        {/* </Avatar> */}
         <Typography component="h1" variant="h5">
           Welcome To Perceptia!
         </Typography>
