@@ -1,44 +1,56 @@
-import React, { Component } from 'react'
-import NavBar from './NavBar'
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core/styles';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
 
-class Header extends React.Component {
-    render() {
-       return (
-          <h1>Perceptia</h1>
-         //  <div>
-         //     <h1>Header</h1>
-         //     <NavBar />
-         //  </div>
+const backgroundImage =
+  'https://image.freepik.com/free-vector/workplace-background-design_1284-606.jpg';
 
-         // <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-         // <a class="navbar-brand" href="#">
+const styles = theme => ({
+  background: {
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundColor: '#7fc7d9',
+    backgroundPosition: 'center',
+  },
+  button: {
+    minWidth: 200,
+  },
+  h5: {
+    marginBottom: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 4,
+    [theme.breakpoints.up('sm')]: {
+      marginTop: theme.spacing.unit * 10,
+    },
+  },
+  more: {
+    marginTop: theme.spacing.unit * 2,
+  },
+});
 
-         //    <img class="logo" src="img/branding/t-logo.png" alt="Thalesian Branding">
- 
-         // </a>
-         // <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-         //     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-         //     <span class="navbar-toggler-icon"></span>
-         // </button>
- 
-         // <div class="collapse navbar-collapse" id="navbarSupportedContent">
-         //     <ul class="navbar-nav ml-auto">
-         //         <li class="nav-item active">
-         //             <a class="nav-link" href="#team">Team<span class="sr-only">(current)</span></a>
-         //         </li>
-         //         <li class="nav-item active">
-         //             <a class="nav-link" href="#perceptia">Perceptia</a>
-         //         </li>
-         //         <li class="nav-item active">
-         //             <a class="nav-link" href="#code">Code</a>
-         //         </li>
-         //     </ul>
-         // </div>
- 
-         // </nav>
- 
-       );
-    }
- }
+function Header(props) {
+  const { classes } = props;
 
- export default Header
+  return (
+      <div backgroundClassName={classes.background}>
+      <img src={backgroundImage} alt="" />
+      <Typography color="inherit" align="center" variant="h2" marked="center">
+        Perceptia
+      </Typography>
+      <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
+        A personalized studying tool for computer assisted learning and dynamic assessments
+      </Typography>
+        Learn More
+      <Typography variant="body2" color="inherit" className={classes.more}>
+        Request for Demo
+      </Typography>
+      </div>
+  );
+}
+
+Header.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Header);
