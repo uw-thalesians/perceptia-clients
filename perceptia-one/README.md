@@ -10,25 +10,25 @@ The PerceptiaOne web client is the first iteration of the Perceptia applications
 
 * [Structure](#structure)
 
-  * [Config and Setup Files](#structure-files)
+  * [Config and Setup Files](#config-and-setup-files)
 
-  * [Perceptia Source](#structure-perceptia-source)
+  * [Perceptia Source](#perceptia-source)
 
 * [Setup](#setup)
 
-  * [Building the Image](#setup-server-build-image)
+  * [Building the Image](#building-the-image)
 
-  * [Custom Image](#setup-server-custom-image)
+  * [Custom Image](#custom-image)
 
-* [Start Server Locally](#start-local)
+* [Start Server Locally](#start-server-locally)
 
-  * [Start with Docker Commands](#start-local-docker-commands)
+  * [Start with Script](#start-with-script)
 
-    * [PowerShell](#start-local-script-powershell)
+    * [PowerShell](#powershell)
 
-  * [Start with NPM Locally](#start-local-npm-local)
+  * [Start with NPM Locally](#start-with-npm-locally)
 
-    * [Environment Variables](#start-local-npm-env-vars)
+    * [Environment Variables](#environment-variables)
 
 ## [Getting Started](#getting-started)
 
@@ -36,7 +36,7 @@ The web client is designed to run within an the nginx docker container. This REA
 
 ## [Structure](#structure)
 
-### [Config and Setup Files](#structure-files)
+### [Config and Setup Files](#config-and-setup-files)
 
 The root of the PerceptiaOne directory contains the supporting files for building the application.
 
@@ -48,7 +48,7 @@ The root of the PerceptiaOne directory contains the supporting files for buildin
 
 [localStartExample.ps1:](./localStartExample.ps1) is meant for local testing of the client in a docker container
 
-### [Perceptia Source](#structure-perceptia-source)
+### [Perceptia Source](#perceptia-source)
 
 [Perceptia:](./perceptia/) Directory containing the source code for the PerceptiaOne web client.
 
@@ -56,13 +56,13 @@ The root of the PerceptiaOne directory contains the supporting files for buildin
 
 The perceptia react app is designed to be deployed using a linux container. The following subsections explain how this container is built and how to use it. The perceptia react app is currently built on the [Nginx](https://hub.docker.com/_/node/) image `node:10.15.3`, and the perceptiaone image is then based off the [Nginx](https://hub.docker.com/_/nginx/) image `nginx:1.15.11-alpine`.
 
-### [Building the Image](#setup-server-build-image)
+### [Building the Image](#building-the-image)
 
 Builds of this container image are automatically triggered by pushes to the GitHub repository.
 
 Builds are tagged using the semver scheme, incrementing as features and breaking changes are made (as defined in an variable in the azure-pipelines.yml file in the root of this repository). For a complete description of the possible tags see the [perceptiaone container repository](https://hub.docker.com/r/uwthalesians/perceptiaone) on the container registry DockerHub.
 
-#### [Build](#setup-server-build-image)
+#### [Build](#build)
 
 The image can be built locally using the docker build command. This command should be run from this directory (where the Dockerfile is located). See the local start script for an automated build and run.
 
@@ -78,29 +78,29 @@ Commands:
 
   `.` the final period in the command indicates the root directory to send to the docker deamon for the build process, this should be the directory where the Dockerfile is located
 
-### [Custom Image](#setup-server-custom-image)
+### [Custom Image](#custom-image)
 
 The Perceptiaone image will be used during development and production. Information about this custom image can be found in the Thalesians container registry on DockerHub [uwthalesians/perceptiaone](https://hub.docker.com/r/uwthalesians/perceptiaone).
 
 Please refer to the description on the [container registry](https://hub.docker.com/r/uwthalesians/perceptiaone) for specifics on how to configure it. The information below only provides an exmaple setup.
 
-#### [Image Specific Options](#custom-image-specific-options)
+#### [Custom Image Specific Options](#custom-image-specific-options)
 
 This section list any configuration options for the custom image.
 
-## [Start Server Locally](#start-local)
+## [Start Server Locally](#start-server-locally)
 
 This setup explains how to build and start the server locally.
 
-### [Start with Script](#start-local-script)
+### [Start with Script](#start-with-script)
 
 Building and starting the perceptiaone container locally can be more involed than running one script. The following must be setup:
 
 1. Populate the [./encrypt](./encrypt) directory with the apprioriate TLS certificates for localhost. See [./encrypt/README.md](./encrypt/README.md) for instructions.
 
-2. Continue to script, [PowerShell](#start-local-script-powershell)
+2. Continue to script, [PowerShell](#powershell)
 
-#### [PowerShell](#start-local-script-powershell)
+#### [PowerShell](#powershell)
 
 For testing the perceptiaone locally, the [localStartExample.ps1](./localStartExample.ps1) script can be used. This script assumes that docker is already installed and running on the system and that the TLS cert and key have been generated (see note above). Note, the script is a PowerShell script and thus requires a PowerShell shell. Additionally, PowerShell will not run unsigned scripts by default, therefore you [may need to enable running unsigned scripts](https://superuser.com/questions/106360/how-to-enable-execution-of-powershell-scripts) to use it.
 
@@ -132,9 +132,9 @@ Run: `.\locaStartExample.ps1 -BuildPOne`
 
 `-BuildPOne` (switch) will build the perceptiaone image using the local source, default is: false. To set true, include the switch
 
-### [Start with Docker Commands](#start-local-docker-commands)
+### [Start with Docker Commands](#start-with-docker-commands)
 
-For directions to start the container locally using a script, see [Start Server Locally](#start-local).
+For directions to start the container locally using a script, see [Start Server Locally](#start-server-locally).
 
 1. pull the image from docker (check [registry](https://hub.docker.com/r/uwthalesians/perceptiaone) for latest images)
 
@@ -144,7 +144,7 @@ For directions to start the container locally using a script, see [Start Server 
 
    See end of [localStartExample.ps1](./localStartExample.ps1) for example docker run
 
-### [Start with NPM Locally](#start-local-npm-local)
+### [Start with NPM Locally](#start-with-npm-locally)
 
 The PerceptiaOne client was initialized using the create react app tooling. This site can be worked on locally, but will require certain environment variables to be set (see configuration below) and a local env file to be created.
 
@@ -154,7 +154,7 @@ The PerceptiaOne client was initialized using the create react app tooling. This
 
 3. Now, from within the perceptia directory, run `npm run start` which will build the client and host it from localhost. The script should automatically open the site in your web browser.
 
-#### [Environment Variables](#start-local-npm-env-vars)
+#### [Environment Variables](#environment-variables)
 
 Use the following variables to configure the client for the given environment during the build process (passed as build args to docker build command or placed in .env.local file for the npm build command).
 
