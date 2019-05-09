@@ -130,8 +130,6 @@ Run: `.\locaStartExample.ps1 -BuildPOne`
 
 `-POnePortPublish` (string) which is the port to publish the perceptiaone container if run by this script, default is: "4444"
 
-`-PerceptiaDockerNet` (string) which is the name of the docker network the container should be attached to when run, default value is "perceptia-net"
-
 `-BuildPOne` (switch) will build the perceptiaone image using the local source, default is: false. To set true, include the switch
 
 ### [Start with Docker Commands](#start-local-docker-commands)

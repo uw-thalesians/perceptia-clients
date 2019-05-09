@@ -3,8 +3,7 @@ Param (
     [String]$ApiServerPort = "4443",
     [String]$ApiServerScheme = "https",
     [String]$POnePortPublish = "4444",
-    [switch]$BuildPOne = $false,
-    [String]$PerceptiaDockerNet = "perceptia-net"
+    [switch]$BuildPOne = $false
 
 )
 
@@ -42,13 +41,10 @@ Set-Variable -Name PERCEPTIAONE_TLSMOUNTSOURCE -Value "$(Get-Location)/encrypt/"
 Write-Host "Removing any existing containers with the name: $PERCEPTIAONE_CONTAINER_NAME"
 docker rm --force ${PERCEPTIAONE_CONTAINER_NAME}
 
-docker network create $PerceptiaDockerNet
-
 Write-Host "Running the container..."
 docker run `
 --detach `
 --name ${PERCEPTIAONE_CONTAINER_NAME} `
---network $PerceptiaDockerNet `
 --publish "8080:80" `
 --publish "${POnePortPublish}:443" `
 --restart on-failure `
