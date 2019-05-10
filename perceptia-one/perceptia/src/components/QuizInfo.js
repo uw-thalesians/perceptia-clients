@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const styles = {
   card: {
@@ -80,10 +81,12 @@ class QuizInfo extends React.Component {
           </CardContent>
         <CardActions>
           <Button size="small" color="primary">
-            Detail
+            <Link to="/summary">Detail</Link>
+     
           </Button>
           <Button size="small" color="primary">
-            Take Quiz Now!
+            <Link to="/quiz">Take Quiz Now!</Link>
+       
           </Button>
         </CardActions>
       </Card>

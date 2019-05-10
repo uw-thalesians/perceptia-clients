@@ -22,6 +22,8 @@ import QuestionView from './components/QuestionView'
 
 import Question from './components/Question'
 
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
+
 
 class App extends Component {
   render() {
@@ -32,11 +34,17 @@ class App extends Component {
           <p>Web server host: {process.env.REACT_APP_WEB_SERVER_HOST}</p>
           <p>API REF: {constants.api.url}</p>
         </header> */}
-        {/* <NavBar />
-        <QuizGallery />
-        <Footer /> */}
 
-        <QuestionView />
+        {/* <QuestionView /> */}
+
+        <Router>
+        <Switch>
+          {/* <QuizGallery/> */}
+          {/* <QuestionView/> */}
+          <Route exact path='/' component={QuizGallery}/>
+          <Route path='/quiz' component={QuestionView}/>
+        </Switch>
+        </Router>
 
       </div>
     );

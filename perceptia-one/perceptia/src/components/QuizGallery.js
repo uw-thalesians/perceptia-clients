@@ -11,7 +11,11 @@ import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import QuizInfo from './QuizInfo'
+import QuestionView from './QuestionView'
+import NavBar from './NavBar';
+import Footer from './Footer';
 
 const styles = {
     cardGrid: {
@@ -54,14 +58,8 @@ class QuizGallery extends React.Component {
         const { classes } = this.props;
         
         return (
-
-            // <Grid container>
-            //     <Grid sm={6} md={4} lg={3}>
-            //         <div> 
-            //             {this.createCards(this.state.quizlist)}
-            //         </div>
-            //     </Grid>
-            // </Grid>
+            <div>
+            <NavBar/>
 
             <Grid container spacing={40}>
             {this.state.quizlist.map(name => (
@@ -71,6 +69,8 @@ class QuizGallery extends React.Component {
             ))}
             </Grid>
 
+            <Footer/>
+            </div>
         )
     }
 
