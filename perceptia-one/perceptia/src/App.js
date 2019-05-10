@@ -18,6 +18,11 @@ import constants from './components/constants'
 
 import QuizGallery from './components/QuizGallery'
 
+import QuestionView from './components/QuestionView'
+
+import Question from './components/Question'
+
+
 class App extends Component {
   render() {
     return (
@@ -27,9 +32,12 @@ class App extends Component {
           <p>Web server host: {process.env.REACT_APP_WEB_SERVER_HOST}</p>
           <p>API REF: {constants.api.url}</p>
         </header> */}
-        <NavBar />
+        {/* <NavBar />
         <QuizGallery />
-        <Footer />
+        <Footer /> */}
+
+        <QuestionView />
+
       </div>
     );
   }
