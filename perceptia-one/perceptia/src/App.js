@@ -24,7 +24,6 @@ import Question from './components/Question'
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
 
-
 class App extends Component {
   render() {
     return (
@@ -43,6 +42,7 @@ class App extends Component {
           {/* <QuestionView/> */}
           <Route exact path='/' component={QuizGallery}/>
           <Route path='/quiz' component={QuestionView}/>
+          {/* <Route path='/summary' component={TopicDetail}/> */}
         </Switch>
         </Router>
 
