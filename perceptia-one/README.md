@@ -132,6 +132,8 @@ Run: `.\locaStartExample.ps1 -BuildPOne`
 
 `-BuildPOne` (switch) will build the perceptiaone image using the local source, default is: false. To set true, include the switch
 
+`-Latest` (switch) will use the latest version of the perceptiaone image build for the develop branch, instead of a spcific version
+
 ### [Start with Docker Commands](#start-with-docker-commands)
 
 For directions to start the container locally using a script, see [Start Server Locally](#start-server-locally).
