@@ -16,6 +16,7 @@ import QuizInfo from './QuizInfo'
 import QuestionView from './QuestionView'
 import NavBar from './NavBar';
 import Footer from './Footer';
+import constants from './constants';
 
 const styles = {
     cardGrid: {
@@ -38,10 +39,14 @@ class QuizGallery extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://students.washington.edu/long27km/any_quiz/v1/list')
-            .then(response => response.json())
+	
+        //fetch('http://students.washington.edu/long27km/any_quiz/v1/list')
+	//fetch('https://localhost:4443/api/v1/anyquiz/list')
+	fetch(`${constants.api.url}/api/v1/anyquiz/list`)
+            .then(response => { return response.json(); })
             .then(response => {
-                var list = [];
+		
+		var list = [];
                 for (var i = 0; i < response.quizzes.length; i++) {
                     list.push(response.quizzes[i].keyword);
                 }
