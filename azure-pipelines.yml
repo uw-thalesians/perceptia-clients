@@ -52,13 +52,13 @@ jobs:
 - job: 'BuildPerceptiaOneImage'
   variables:
   - name: ImageQualified 
-    value: $(GatewayImageQualified)
+    value: $(PerceptiaOneImageQualified)
   - name: ImageVersionMajor
-    value: $(GatewayVersionMajor)
+    value: $(PerceptiaOneVersionMajor)
   - name: ImageVersionMinor
-    value: $(GatewayVersionMinor)
+    value: $(PerceptiaOneVersionMinor)
   - name: ImageVersionPatch
-    value: $(GatewayVersionPatch)
+    value: $(PerceptiaOneVersionPatch)
   pool:
     vmImage: 'Ubuntu-16.04'
   dependsOn: 'TestPerceptiaOneUnitTests'
