@@ -8,8 +8,12 @@ variables:
   - group: Web
   - group: WebDevelopment # Change for release to production
   # Client Variables
-  - name: PerceptiaOneVersion
-    value: '0.0.1'
+  - name: PerceptiaOneVersionMajor
+    value: '0'
+  - name: PerceptiaOneVersionMinor
+    value: '0'
+  - name: PerceptiaOneVersionPatch
+    value: '1'
   - name: PerceptiaOneImageQualified
     value: '$(DockerHubOrg)/$(PerceptiaOneImageName)'
 
@@ -32,7 +36,7 @@ trigger:
     - infrastructure/*
 
 pr:
-  autoCancel: true
+  autoCancel: "true"
   branches:
     include:
     - master
@@ -47,14 +51,14 @@ jobs:
 - job: 'TestPerceptiaOneUnitTests'
 - job: 'BuildPerceptiaOneImage'
   variables:
-  - name: ImageTagVersion
-    value: '$(PerceptiaOneImageQualified):$(PerceptiaOneVersion)'
-  - name: ImageTagVersionBuildId
-    value: '$(ImageTagVersion)-build-$(Build.BuildId)'
-  - name: ImageTagVersionBuildIdBranch
-    value: '$(ImageTagVersionBuildId)-branch-$(Build.SourceBranchName)'
-  - name: ImageTagVersionLatestBranch
-    value: '$(ImageTagVersion)-build-latest-branch-$(Build.SourceBranchName)'
+  - name: ImageQualified 
+    value: $(GatewayImageQualified)
+  - name: ImageVersionMajor
+    value: $(GatewayVersionMajor)
+  - name: ImageVersionMinor
+    value: $(GatewayVersionMinor)
+  - name: ImageVersionPatch
+    value: $(GatewayVersionPatch)
   pool:
     vmImage: 'Ubuntu-16.04'
   dependsOn: 'TestPerceptiaOneUnitTests'
@@ -65,14 +69,15 @@ jobs:
     inputs:
       command: Build an image
       dockerFile: '$(system.defaultWorkingDirectory)/perceptia-one/Dockerfile'
-      imageName: $(PerceptiaOneImageQualified)
+      imageName: $(ImageQualified)
       qualifyImageName: false
       arguments: "--build-arg REACT_APP_WEB_SERVER_HOST=$(WebServerHost) --build-arg REACT_APP_API_SERVER_HOST=$(ApiServerHost) --build-arg REACT_APP_API_SERVER_PORT=$(ApiServerPort) --build-arg REACT_APP_API_SERVER_SCHEME=$(ApiServerScheme)"
-  - template: 'infrastructure/azp/template/step/dockerStandardTagPush.yml'
+  - template: './infrastructure/azp/template/step/dockerStandardTagPush.yml'
     parameters:
-      qualifiedImageName: $(PerceptiaOneImageQualified)
-      versionLatestBranchTag: $(ImageTagVersionLatestBranch)
-      versionBuildIdBranchTag: $(ImageTagVersionBuildIdBranch)
-      versionTag: $(ImageTagVersion)
-      versionBuildIdTag: $(ImageTagVersionBuildId)
-      tagProduction: or(eq(variables[ 'productionTags'], 'true'), or(startsWith(variables['Build.SourceBranch'], 'refs/heads/master/'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
+      qualifiedImageName: $(ImageQualified)
+      versionMajor: $(ImageVersionMajor)
+      versionMinor: $(ImageVersionMinor)
+      versionPatch: $(ImageVersionPatch)
+      buildId: $(Build.BuildId)
+      branch: $(Build.SourceBranchName)
+      tagProduction: or(eq(variables[ 'productionTags'], 'true'), startsWith(variables['Build.SourceBranch'], 'refs/heads/master/'))
