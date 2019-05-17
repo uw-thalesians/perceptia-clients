@@ -11,11 +11,12 @@ import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
-import QuizInfo from './QuizInfo'
-import QuestionView from './QuestionView'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import QuizInfo from './QuizInfo';
+import QuestionView from './QuestionView';
 import NavBar from './NavBar';
 import Footer from './Footer';
+import constants from './constants';
 
 const styles = {
     cardGrid: {
@@ -38,7 +39,8 @@ class QuizGallery extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://students.washington.edu/long27km/any_quiz/v1/list')
+    
+        fetch(constants.localhost.url + 'list')
             .then(response => response.json())
             .then(response => {
                 var list = [];
@@ -53,6 +55,13 @@ class QuizGallery extends React.Component {
                 quizlist: list
             }))
     }
+
+    // handleChildClick(component, event) {
+    //     this.setState({
+    //         selectedQuiz:component.props.quizName
+    //     })
+    //     this.props.liftStateUp(component.props.quizName)
+    // }
 
     render() {
         const { classes } = this.props;

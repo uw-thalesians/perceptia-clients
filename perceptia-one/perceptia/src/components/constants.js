@@ -13,6 +13,10 @@ export default {
 
     api: {
         url: api_ref
+    },
+
+    localhost: {
+        url: 'https://localhost:4443/api/v1/anyquiz/'
     }
 
 }

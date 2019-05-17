@@ -12,6 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import constants from './constants';
 
 const styles = {
   card: {
@@ -31,7 +32,8 @@ class QuizInfo extends React.Component {
     this.state = {
       quiz:null,
       summary:null,
-      shortSummary:null
+      shortSummary:null,
+      imageurl:null
     };
   }
 
@@ -42,11 +44,12 @@ class QuizInfo extends React.Component {
   }
 
   componentDidMount() {
-      fetch('http://students.washington.edu/long27km/any_quiz/v1/read/' + this.state.quiz)
+      fetch(constants.localhost.url + 'read/' + this.state.quiz)
         .then(response => response.json())
         .then(response => this.setState({
           summary: response.summary,
-          shortSummary: response.summary.substring(0, 250) + "..."
+          shortSummary: response.summary.substring(0, 250) + "...",
+          imageurl: response.image
         }))
   }
 
@@ -61,14 +64,18 @@ class QuizInfo extends React.Component {
   //   }
   // }
 
+  // handleButtonClicked = event => {
+    
+  // }
+
   render() {
     const { classes } = this.props;
-    console.log(this.state.shortSummary)
+
       return (
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
-            image={require('./img/placeholder.png')}
+            image={this.state.imageurl}
             title="placeholder"
           />
           <CardContent>
@@ -80,14 +87,51 @@ class QuizInfo extends React.Component {
             </Typography>
           </CardContent>
         <CardActions>
-          <Button size="small" color="primary">
-            <Link to="/summary">Detail</Link>
+          <Link to={{
+            pathname: './study',
+            state: {
+              selectedQuiz: this.state.quiz,
+              quizSummary: this.state.summary
+            }
+          }}>
+            <Button 
+              value={this.state.quiz}
+              size="small"
+              color="primary">
+              Study
+            </Button>
+          </Link>
+          <Link to={{
+            pathname: './quiz',
+            state: {
+              selectedQuiz:this.state.quiz
+            }
+          }}>
+            <Button 
+              value={this.state.quiz}
+              size="small"
+              color="primary">
+              Quiz
+            </Button>
+          </Link>
+          {/* <Button 
+            value={this.state.quiz}
+            onClick={this.props.onClick}
+            size="small" 
+            color="primary">
+
+            <Link to="/study">Study</Link>
      
           </Button>
-          <Button size="small" color="primary">
-            <Link to="/quiz">Take Quiz Now!</Link>
+          <Button 
+            value={this.state.quiz}
+            onClick={this.props.onClick}
+            size="small" 
+            color="primary">
+            
+            <Link to="/quiz">Quiz</Link>
        
-          </Button>
+          </Button> */}
         </CardActions>
       </Card>
     );
