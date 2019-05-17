@@ -36,24 +36,6 @@ class QuestionView extends React.Component {
         }
     }
 
-    // componentWillMount() {
-
-    //     const { selectedQuiz } = this.props.location.state
-
-    //     fetch(constants.localhost.url + 'questions/' + selectedQuiz)
-    //         .then(response => response.json())
-    //         .then(response => {
-    //             var list = []
-    //             for (var i = 0; i < response.questions.length; i++) {
-    //                 list.push(response.questions[i])
-    //             }
-    //             return list
-    //         })
-    //         .then(list => this.setState({
-    //             questions: list
-    //         }))
-    // }
-
     componentDidMount() {
 
         const { selectedQuiz } = this.props.location.state
@@ -81,23 +63,7 @@ class QuestionView extends React.Component {
                 question_type: data.q_type,
                 questionId: data.id,
             }))
-            // .then(list => this.setState({
-            //     questions: list,
-            //     question: list[this.state.counter].question,
-            //     answerOptions: list[this.state.counter].answer,
-            //     question_type: list[this.state.counter].q_type,
-            //     questionId: list[this.state.counter].id,
 
-            // }))
-
-
-        // this.setState({
-        //     question: this.state.questions[this.state.counter].question,
-        //     answerOptions: this.state.questions[this.state.counter].answer,
-        //     question_type: this.state.questions[this.state.counter].q_type,
-        //     questionId: this.state.questions[this.state.counter].id
-
-        // })
     }
 
     //setUserAnswer(answer) {
