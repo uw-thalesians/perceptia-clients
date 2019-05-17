@@ -13,6 +13,9 @@
             },
             "partOf": {
                 "value": "web"
+            },
+            "environment": {
+                "value": "production"
             }
         }
 }

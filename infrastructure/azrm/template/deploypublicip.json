@@ -37,6 +37,7 @@
             {
                 "name": "[parameters('publicIpAddressName')]",
                 "type": "Microsoft.Network/publicIpAddresses",
+                "apiVersion": "2018-08-01",
                 "location": "[parameters('location')]",
                 "properties": {
                     "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
