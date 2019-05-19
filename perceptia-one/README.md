@@ -134,6 +134,8 @@ Run: `.\locaStartExample.ps1 -BuildPOne`
 
 `-Latest` (switch) will use the latest version of the perceptiaone image build for the develop branch, instead of a spcific version
 
+`-CleanUp` (switch) will remove the container(s) started by this script
+
 ### [Start with Docker Commands](#start-with-docker-commands)
 
 For directions to start the container locally using a script, see [Start Server Locally](#start-server-locally).
