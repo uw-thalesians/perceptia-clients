@@ -44,7 +44,7 @@ class QuizInfo extends React.Component {
   }
 
   componentDidMount() {
-      fetch(constants.localhost.url + 'read/' + this.state.quiz)
+      fetch(`${constants.api.url}/api/v1/anyquiz/read/` + this.state.quiz)
         .then(response => response.json())
         .then(response => this.setState({
           summary: response.summary,

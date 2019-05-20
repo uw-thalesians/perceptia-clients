@@ -40,7 +40,7 @@ class QuestionView extends React.Component {
 
         const { selectedQuiz } = this.props.location.state
 
-        fetch(constants.localhost.url + 'questions/' + selectedQuiz)
+        fetch(`${constants.api.url}/api/v1/anyquiz/questions/` + selectedQuiz)
             .then(response => response.json())
             .then(response => {
                 var list = []
@@ -125,16 +125,9 @@ class QuestionView extends React.Component {
     }
 
     render() {
-        // const { classes } = this.props;
-            
+        
         if (this.state.questions.length > 0) {
             return (
-                // <Question data={this.state.questions[0]}/>
-                // <div>
-                //     {this.state.questions.map(q => (
-                //         <Question data={q} />
-                //     ))}
-                // </div>
 
                 <div>
                     <div className="App-header">
