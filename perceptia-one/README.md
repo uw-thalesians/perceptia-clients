@@ -126,7 +126,7 @@ Run: `.\locaStartExample.ps1 -BuildPOne`
 
 `-ApiServerScheme` (string) which is the scheme that the website should make api calls using. Default value is "https". Note, if you do not use the -BuildPOne switch option, the only scheme the client will use is "https"
 
-`-ApiServerPort` (string) which is the port that the website should make api calls to. Default value is "443". Note, if you do not use the -BuildPOne switch option, the only port the client will use is "443"
+`-ApiServerPort` (string) which is the port that the website should make api calls to. Default value is "4443". Note, if you do not use the -BuildPOne switch option, the only port the client will use is "443"
 
 `-POnePortPublish` (string) which is the port to publish the perceptiaone container if run by this script, default is: "4444"
 
