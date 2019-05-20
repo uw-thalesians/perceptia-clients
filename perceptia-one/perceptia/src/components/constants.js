@@ -12,7 +12,7 @@ export default {
     },
 
     api: {
-        url: 'https://localhost:4443'
+        url: api_ref
     },
 
     localhost: {
