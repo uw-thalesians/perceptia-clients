@@ -76,7 +76,6 @@ class QuestionView extends React.Component {
     componentWillMount() {
 
         fetch(`${constants.api.url}/api/v1/anyquiz/questions/` + this.state.quiz)
-        //fetch('http://students.washington.edu/long27km/any_quiz/v1/questions/' + this.state.quiz)
             .then(response => response.json())
             .then(response => {
                 var list = []
