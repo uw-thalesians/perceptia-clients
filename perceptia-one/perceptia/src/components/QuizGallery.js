@@ -34,7 +34,8 @@ class QuizGallery extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://students.washington.edu/long27km/any_quiz/v1/list')
+	
+	fetch(`${constants.api.url}/api/v1/anyquiz/list`)
             .then(response => response.json())
             .then(response => {
                 var list = [];
