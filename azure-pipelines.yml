@@ -11,7 +11,7 @@ variables:
   - name: PerceptiaOneVersionMajor
     value: '0'
   - name: PerceptiaOneVersionMinor
-    value: '0'
+    value: '1'
   - name: PerceptiaOneVersionPatch
     value: '1'
   - name: PerceptiaOneImageQualified
