@@ -11,7 +11,12 @@ import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import QuizInfo from './QuizInfo'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import QuizInfo from './QuizInfo';
+import QuestionView from './QuestionView';
+import NavBar from './NavBar';
+import Footer from './Footer';
+import constants from './constants';
 
 const styles = {
     cardGrid: {
@@ -34,7 +39,8 @@ class QuizGallery extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://students.washington.edu/long27km/any_quiz/v1/list')
+        console.log(`${constants.api.url}/api/v1/anyquiz/list`)
+	    fetch(`${constants.api.url}/api/v1/anyquiz/list`)
             .then(response => response.json())
             .then(response => {
                 var list = [];
@@ -50,18 +56,19 @@ class QuizGallery extends React.Component {
             }))
     }
 
+    // handleChildClick(component, event) {
+    //     this.setState({
+    //         selectedQuiz:component.props.quizName
+    //     })
+    //     this.props.liftStateUp(component.props.quizName)
+    // }
+
     render() {
         const { classes } = this.props;
         
         return (
-
-            // <Grid container>
-            //     <Grid sm={6} md={4} lg={3}>
-            //         <div> 
-            //             {this.createCards(this.state.quizlist)}
-            //         </div>
-            //     </Grid>
-            // </Grid>
+            <div>
+            <NavBar/>
 
             <Grid container spacing={40}>
             {this.state.quizlist.map(name => (
@@ -71,6 +78,8 @@ class QuizGallery extends React.Component {
             ))}
             </Grid>
 
+            <Footer/>
+            </div>
         )
     }
 
