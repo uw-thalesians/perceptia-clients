@@ -5,7 +5,7 @@ metadata:
   labels:
     label.perceptia.info/name: perceptiaone
     label.perceptia.info/instance: perceptiaone-1
-    label.perceptia.info/version: "0.0.1"
+    label.perceptia.info/version: "0.1.1"
     label.perceptia.info/managed-by: kubectl
     label.perceptia.info/component: server
     label.perceptia.info/type: frontend
@@ -21,20 +21,30 @@ spec:
         app: perceptiaone
         label.perceptia.info/name: perceptiaone
         label.perceptia.info/instance: perceptiaone-1
-        label.perceptia.info/version: "0.0.1"
+        label.perceptia.info/version: "0.1.1"
         label.perceptia.info/managed-by: kubectl
         label.perceptia.info/component: server
         label.perceptia.info/type: frontend
         label.perceptia.info/part-of: perceptia-web
     spec:
       containers:
-      - name: gateway
-        image: uwthalesians/perceptiaone:0.0.1-build-238-branch-develop
+      - name: perceptiaone
+        image: uwthalesians/perceptiaone:0.1.1-build-306-branch-quetzal-user-auth
         ports:
-        - containerPort: 443
-          name: "https"
-        - containerPort: 80
-          name: "http"
+        - name: https
+          containerPort: 443
+        - name: http
+          containerPort: 80
+        env:
+          - name: PONE_TLS_CERT
+            value: "tls.crt"
+          - name: PONE_TLS_KEY
+            value: "tls.key"
+          - name: PONE_SERVER_HOST
+            valueFrom:
+              secretKeyRef:
+                name: perceptiaone
+                key: server-host
         volumeMounts:
           - name: "encrypt"
             mountPath: "/etc/sitecert"
