@@ -62,7 +62,7 @@ jobs:
   pool:
     vmImage: 'Ubuntu-16.04'
   dependsOn: 'TestPerceptiaOneUnitTests'
-  condition: and(succeeded(), or(eq(variables['forceBuild'], 'true'), not(startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/'))))
+  condition: succeeded()
   steps:
   - task: Docker@1
     displayName: 'Build image'
