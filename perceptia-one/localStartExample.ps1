@@ -3,6 +3,9 @@ Param (
     [String]$ApiServerPort = "4443",
     [String]$ApiServerScheme = "https",
     [String]$POnePortPublish = "4444",
+    [string]$POneVersion = "0.1.1",
+    [string]$Build = "272",
+    [string]$Branch = "develop",
     [switch]$BuildPOne = $false,
     [switch]$Latest = $false,
     [switch]$CleanUp
@@ -36,11 +39,11 @@ if (!$CleanUp) {
         .
     } else {
         Write-Host "-BuildPOne option false, using prebuilt image from dockerhub"
-        Set-Variable -Name PONE_OPT -Value "163"
+        Set-Variable -Name PONE_OPT -Value $Build
         if ($Latest) {
             Set-Variable -Name PONE_OPT -Value latest
         }
-        Set-Variable -Name PERCEPTIAONE_IMAGE_AND_TAG -Value "uwthalesians/perceptiaone:0.0.1-build-${PONE_OPT}-branch-develop"
+        Set-Variable -Name PERCEPTIAONE_IMAGE_AND_TAG -Value "uwthalesians/perceptiaone:${POneVersion}-build-${PONE_OPT}-branch-develop"
     }
     
     
