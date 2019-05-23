@@ -55,6 +55,9 @@ if (!$CleanUp) {
     Write-Host "Running the container..."
     docker run `
     --detach `
+    --env PONE_SERVER_HOST="localhost" `
+    --env PONE_TLS_CERT="fullchain.pem" `
+    --env PONE_TLS_KEY="privkey.pem" `
     --label "label.perceptia.info/name=perceptiaone" `
     --label "label.perceptia.info/instance=perceptiaone-1" `
     --label "label.perceptia.info/managed-by=docker" `

@@ -52,6 +52,10 @@ The root of the PerceptiaOne directory contains the supporting files for buildin
 
 [Perceptia:](./perceptia/) Directory containing the source code for the PerceptiaOne web client.
 
+### [NGINX Config](#nginx-config)
+
+[config:](./config/) Directory containing the config for the nginx server.
+
 ## [Setup](#setup)
 
 The perceptia react app is designed to be deployed using a linux container. The following subsections explain how this container is built and how to use it. The perceptia react app is currently built on the [Nginx](https://hub.docker.com/_/node/) image `node:10.15.3`, and the perceptiaone image is then based off the [Nginx](https://hub.docker.com/_/nginx/) image `nginx:1.15.11-alpine`.
@@ -87,6 +91,18 @@ Please refer to the description on the [container registry](https://hub.docker.c
 #### [Custom Image Specific Options](#custom-image-specific-options)
 
 This section list any configuration options for the custom image.
+
+##### [Container Environment Variables](#custom-image-env-vars)
+
+Environment variables must be passed to be accessible to the entrypoint.sh script (such as using the --env flag with the docker run commnad)
+
+Use the following variables to configure the nginx server for the given environment.
+
+`PONE_SERVER_HOST={hostname}` (REQUIRED) configures the hostname that the server is serving files for.
+
+`PONE_TLS_CERT={fileName}` (REQUIRED) should be the name of the tls cert mounted into the volume at "/etc/sitecert/"
+
+`PONE_TLS_KEY={fileName}` (REQUIRED) should be the name of the tls key mounted into the volume at "/etc/sitecert/"
 
 ## [Start Server Locally](#start-server-locally)
 
