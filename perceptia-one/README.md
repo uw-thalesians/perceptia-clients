@@ -1,8 +1,6 @@
 # PerceptiaOne Client Implementation
 
-Last updated: 2019-05-08
-
-The PerceptiaOne web client is the first iteration of the Perceptia applications web front-end. This readme explains how the files in this directory are used to build the web client.
+The PerceptiaOne web client is the first iteration of the Perceptia applications web frontend. This readme explains how the files in this directory are used to build the web client. The [Readme](./perceptia/README.md) in the perceptia directory explains how the react app is structured and how to get started developing with it. This readme explains how to build the app and use the localStartExample.ps1 script to serve the client locally using an nginx Docker container.
 
 ## [Contents](#contents)
 

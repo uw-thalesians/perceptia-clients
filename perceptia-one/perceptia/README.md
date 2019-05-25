@@ -1,3 +1,64 @@
+# Perceptia Client Implementation Perceptia-One
+
+The purpose of the this application is to demo the Perceptia-Api as implemented in the [perceptia-servers](https://github.com/uw-thalesians/perceptia-servers) GitHub repository. This readme explains how [this react app is structured](#project-structure) and additional information about the [modules used by this project](#modules).
+
+## Contents
+
+* [Getting Started](#getting-started)
+
+* [Project Structure](#project-structure)
+
+  * [Application Source Organization](#application-source-organization)
+
+* [Modules](#modules)
+
+* [Create-React-App Default Readme](#create-react-default-readme)
+
+## [Getting Started](#getting-started)
+
+## [Project Structure](#project-structure)
+
+A react app is organized around several main directories:
+
+[build:](./build) which is where the web app code is saved after running `npm run build`. This is a production ready build that can be deployed. How it is built is defined in the 'build' script referenced in the package.json file.
+
+[node_modules:](./node_modules) after running `npm install` the node_modules directory will be created which will include all the modules (packages) that this application imports and uses in development and the production build. Using the npm install --save {packageName} will add the package to the list of dependencies in the package.json file and add the packages to the node_modules file. Use the --save-dev option to save a dependency only needed in development but not the production build.
+
+[public:](./public) contains the primary index.html file for the application. The index.html file will render the application in its body section. Only files stored in the public folder can be accessed in the index.html file. Files in this folder are copied to the final build.
+
+[src:](./src) is where the primary logic of the application lives. This contains all of the javascript files and other associated files that make up the application. The structure of this folder will be explained in more detail in the [Application Source Organization](#application-source-organization) section below.
+
+Additionally, the following files are used for:
+
+.env.*: files that are prefixed with .env. contain environment specific values to be built into the application. This includes values for the perceptia api server that will be used to make api calls. See the [readme in the parent directory perceptia-one for more about this](./../README.md), specifically the section on 'Start with NPM Locally'.
+
+[.gitignore:](./.gitignore) defines the specific files that should be ignored by git from this application.
+
+[package.json:](./package.json) defines the configuration of this project, including the dependencies of the application, the target browsers for the project (used by pollyfill tooling to identify what pollyfills are necessary), application version, among other things. See [the package.json reference here.](https://docs.npmjs.com/files/package.json)
+
+[package-lock.json:](./package-lock.json) maintains the specific version of each dependency used so that npm install will always use the same or specified version of a given package to ensure consistent and reproducible builds. 
+
+### [Application Source Organization](#application-source-organization)
+
+This section describes how the files in the 'src' directory are organized. This organization defines how the app is structured and lays out in general how parts of the app should be connected, [embracing a modular approach.](https://medium.com/@alexmngn/why-react-developers-should-modularize-their-applications-d26d381854c1) Additionally, the directory structure has been based on [Alexis Mangin's article on organizing a React application](https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1) A key note is that this structure is meant to make it easier to work collaboratively by making it clear how code is consumed by other code; such that only the root level components/scenes/services should be imported by other components/scenes/services, allowing the sub- components/services/scenes to change without breaking other parts of the application as long as the root level component/scene/service does not break its contract.
+
+[components:](./src/components) are reusable UI elements of the application. The components directory should contain components that are used anywhere in the application. Components that are only used by one scene (logic page of the application), should be stored in a components subdirectory for that scene. A component can have a subdirectory for components it uses that are not used outside that component.
+
+[scenes:](./src/scenes) are larger components that represent a page of the application, which then load additional components. A scene can contain components, scenes and services, which should only be used by that parent scene or made a root component/scene/service if it is going to be used by module outside the parent scene.
+
+[services:](./src/services) are where the core business logic for the application lives. This includes logic for handling sessions, setting up api calls, managing application state, etc. Services can have their own services subdirectory for the services that only the parent service uses. Just like with components and scenes if that module will be used by another module besides the parent, it should be defined in the root directory for that scene/component/service.
+
+[data:](./src/data) manages interaction with the data store (to be implemented, Redux)
+
+[index.js:](./src/index.js) is the connector between the html page in the public directory and the App.js file in the src file. Additionally, index.js handles registering the service worker for the application.
+
+[App.js:](./src/App.js) is the main entrypoint for the application, handling the loading of all parts of the application.
+
+## [Modules](#modules)
+
+
+## [Create-React-App Default Readme](#create-react-default-readme)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
