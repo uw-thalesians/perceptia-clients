@@ -1,21 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import QuizInfo from './QuizInfo';
-import Question from './Question';
+import {Question, Results} from './index.js';
 import constants from './constants';
-import Results from './Results'
 import './quiz.css';
 
 
@@ -33,36 +18,36 @@ class QuestionView extends React.Component {
             counter: 0,
             completed: false,
 
-        }
+        };
     }
 
     componentDidMount() {
 
-        const { selectedQuiz } = this.props.location.state
+        const { selectedQuiz } = this.props.location.state;
 
         fetch(`${constants.api.url}/api/v1/anyquiz/questions/` + selectedQuiz)
             .then(response => response.json())
             .then(response => {
-                var list = []
-                for (var i = 0; i < response.questions.length; i++) {
-                    list.push(response.questions[i])
+                let list = [];
+                for (let i = 0; i < response.questions.length; i++) {
+                    list.push(response.questions[i]);
                 }
                
-                return list
+                return list;
 
             })
             .then(list => {
                 this.setState({
                     questions: list
-                })
-                return list[this.state.counter]
+                });
+                return list[this.state.counter];
             })
             .then(data => this.setState({
                 question: data.question,
                 answerOptions: data.answer,
                 question_type: data.q_type,
                 questionId: data.id,
-            }))
+            }));
 
     }
 
@@ -74,20 +59,23 @@ class QuestionView extends React.Component {
     //
     //}
     
-    setNextQuestion() {
-        const counter = this.state.counter + 1
+    setNextQuestion = () => {
+        if (this.state.counter === this.state.questions.length -1) {
+            return;
+        }
+        const counter = this.state.counter + 1;
         
-        this.setState({
+        this.setState((state) =>({
             counter: counter,
-            question: this.state.questions[counter].question,
-            answerOptions: this.state.questions[counter].answer,
-            questionId: this.state.questions[counter].id,
-            question_type: this.state.questions[counter].q_type
-        })
+            question: state.questions[counter].question,
+            answerOptions: state.questions[counter].answer,
+            questionId: state.questions[counter].id,
+            question_type: state.questions[counter].q_type
+        }));
 
-    }
+    };
 
-    handleAnswerSelected(event) {
+    handleAnswerSelected = (event) => {
         //this.setUserAnswer(event.currentTarget.value);
         if (this.state.counter < this.state.questions.length - 1) {
             setTimeout(() => this.setNextQuestion(), 300);
@@ -95,19 +83,19 @@ class QuestionView extends React.Component {
             //setTimeout(() => this.setResults(), 300);
             this.setState({
                 completed:true
-            })
+            });
         }
-    }
+    };
 
-    renderLogic() {
+    renderLogic = () => {
 
-        console.log(this.state.completed)
+        console.log(this.state.completed);
 
         if (this.state.completed) {
 
             return (
                 <Results />
-            )
+            );
 
         } else {
 
@@ -117,12 +105,12 @@ class QuestionView extends React.Component {
                 question_type={this.state.question_type}
                 answerOptions={this.state.answerOptions}
                 questionId={this.state.questionId}
-                onAnswerSelected={() => this.handleAnswerSelected()} />
+                onAnswerSelected={this.handleAnswerSelected} />
 
-            )
+            );
 
         }
-    }
+    };
 
     render() {
         
@@ -136,13 +124,13 @@ class QuestionView extends React.Component {
                     {this.renderLogic()}
                 </div>
 
-            )
+            );
         }
         return (
             <div>
                 Loading
             </div>
-        )
+        );
 
     }
 

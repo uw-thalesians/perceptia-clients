@@ -1,24 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  Button, Card, CardActions, CardContent, CardMedia, Typography, withStyles
+} from '@material-ui/core';
+import { Link } from "react-router-dom";
 import constants from './constants';
 
 const styles = {
   card: {
     maxWidth: 345,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    textAlign: 'center',
   },
   media: {
     height: 140,
@@ -28,7 +20,7 @@ const styles = {
 class QuizInfo extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       quiz:null,
       summary:null,
@@ -40,7 +32,7 @@ class QuizInfo extends React.Component {
   static getDerivedStateFromProps(nextProps) {
     return {
       quiz:nextProps.quizName
-    }
+    };
   }
 
   componentDidMount() {
@@ -50,7 +42,7 @@ class QuizInfo extends React.Component {
           summary: response.summary,
           shortSummary: response.summary.substring(0, 250) + "...",
           imageurl: response.image
-        }))
+        }));
   }
 
   // componentDidUpdate(prevProps, prevState) {

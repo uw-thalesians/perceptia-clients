@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
+import { Typography, withStyles } from '@material-ui/core';
 
 const backgroundImage =
   'https://image.freepik.com/free-vector/workplace-background-design_1284-606.jpg';
@@ -34,7 +31,7 @@ function Header(props) {
 
   return (
       <div backgroundClassName={classes.background}>
-      <img src={backgroundImage} alt="" />
+      {/*<img src={backgroundImage} alt="" />*/}
       <Typography color="inherit" align="center" variant="h2" marked="center">
         Perceptia
       </Typography>
