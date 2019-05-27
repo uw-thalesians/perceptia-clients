@@ -30,7 +30,7 @@ The PerceptiaOne web client is the first iteration of the Perceptia applications
 
 ## [Getting Started](#getting-started)
 
-The web client is designed to run within an the nginx docker container. This README will describe the key files used to build and run this client in a container.
+The web client is designed to run within an nginx docker container. This README will describe the key files used to build and run this client in a container. To develop this web client, see the [Readme](./perceptia/README.md) in the [perceptia](./perceptia) subdirectory, which includes information about the structure of the client code and the external moduels (thrid party packages) used.
 
 ## [Structure](#structure)
 

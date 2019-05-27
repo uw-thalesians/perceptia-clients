@@ -24,7 +24,7 @@ import QuestionView from './components/QuestionView';
 
 import Study from './components/Study';
 
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route,/* Link,*/ Switch } from "react-router-dom";
 
 class App extends Component {
 
