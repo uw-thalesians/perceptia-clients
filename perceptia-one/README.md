@@ -132,11 +132,11 @@ Run: `.\locaStartExample.ps1`
 
 However, **if you want to build the image locally from source**, you need to include the -BuildPOne switch parameter.
 
-Run: `.\locaStartExample.ps1 -BuildPOne`
+    Run: `.\locaStartExample.ps1 -BuildPOne`
 
 Note, **if you want to build the image locally from source but want to use an api server that is not the default**, you need to include the options defined below: -ApiServerHost, -ApiServerScheme, -ApiServerPort.
 
-Run: `.\locaStartExample.ps1 -BuildPOne`
+    Run: `.\locaStartExample.ps1 -BuildPOne -ApiServerDev`
 
 `-ApiServerHost` (string) which is the host that the website should make api calls to. Default value is "localhost". Note, if you do not use the -BuildPOne switch option, the only host the client will use is "api.dev.perceptia.info"
 
@@ -144,11 +144,19 @@ Run: `.\locaStartExample.ps1 -BuildPOne`
 
 `-ApiServerPort` (string) which is the port that the website should make api calls to. Default value is "4443". Note, if you do not use the -BuildPOne switch option, the only port the client will use is "443"
 
+`-ApiServerProd` (switch) valid when -BuildPOne flag not set, will build the perceptiaone image with the ApiServer* values set to use the api.perceptia.info server, overriding any of the specic -ApiServer options
+
+`-ApiServerDev` (switch) valid when -BuildPOne flag not set, will build the perceptiaone image with the ApiServer* values set to use the api.dev.perceptia.info server, overriding any of the specic -ApiServer options
+
 `-POnePortPublish` (string) which is the port to publish the perceptiaone container if run by this script, default is: "4444"
+
+`-POneVersion` (String) sets the version of the perceptiaone image to use, default is a known stable version of the image from the develop branch
 
 `-BuildPOne` (switch) will build the perceptiaone image using the local source, default is: false. To set true, include the switch
 
 `-Latest` (switch) will use the latest version of the perceptiaone image build for the develop branch, instead of a spcific version
+
+`-CurrentBranch` (Switch) when set, uses the name of the current branch to specify the images to use, if on branch "feature/peacock-local-start" would use images with the branch tag "peacock-local-start", default false
 
 `-CleanUp` (switch) will remove the container(s) started by this script
 

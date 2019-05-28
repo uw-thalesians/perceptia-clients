@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: perceptiaone
-        image: uwthalesians/perceptiaone:0.1.1-build-306-branch-quetzal-user-auth
+        image: uwthalesians/perceptiaone:0.1.1-build-309-branch-develop
         ports:
         - name: https
           containerPort: 443
