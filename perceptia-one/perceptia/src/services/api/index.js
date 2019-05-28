@@ -7,19 +7,18 @@ export function createCustomAxios(constants, sessionSelectors, basePath = '', ap
     let instance = axios.create({
         baseURL: ''.concat(constants.apiRefBase, basePath),
         headers: {
-            [constants.headerPerceptiaApiVersion]: apiVersion,
+            common:{[constants.headerPerceptiaApiVersion]: apiVersion},
         },
     });
-    instance.interceptors.request.use(() => {
+    instance.interceptors.request.use((config) => {
         const currSession = sessionSelectors.read();
         let headersConfig = {};
         if (currSession.active) {
             let token = constants.authorizationBearer.concat(' ', currSession.tokens.access.value);
-            headersConfig = {
-                [constants.headerAuthorization]: token,
+            headersConfig = {headers:{common:{[constants.headerAuthorization]: token,}},
             };
         }
-        return ({headers:{...headersConfig}});
+        return (headersConfig);
     });
     return instance;
 }
