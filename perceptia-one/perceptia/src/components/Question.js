@@ -50,6 +50,10 @@ class Question extends React.Component {
         console.log("changed")
     }
 
+    handleClick(e) {
+        console.log("clicked")
+    }
+
     render() {
 
         return (
@@ -77,6 +81,7 @@ class Question extends React.Component {
                                                 className="radioCustomButton"
                                                 name="radioGroup"
                                                 checked={this.state.selectedAnswer === option} 
+                                                onClick={() => this.handleClick()}
                                                 onChange={() => this.handleChange()}
                                                 />
                                             <label className="radioCustomLabel">
@@ -91,6 +96,7 @@ class Question extends React.Component {
                                                 className="radioCustomButton"
                                                 name="radioGroup"
                                                 checked={this.state.selectedAnswer === option}
+                                                onClick={() => this.handleClick()}
                                                 onChange={() => this.handleChange()}
                                                 />
                                             <label className="radioCustomLabel">
