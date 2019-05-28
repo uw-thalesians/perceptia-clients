@@ -5,7 +5,7 @@ ARG REACT_APP_API_SERVER_PORT
 ARG REACT_APP_API_SERVER_SCHEME
 WORKDIR /usr/src/app
 COPY perceptia/package-lock.json perceptia/package.json ./
-RUN npm install
+RUN npm install --production
 COPY perceptia/ ./
 RUN npm run build
 
