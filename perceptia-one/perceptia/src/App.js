@@ -26,6 +26,8 @@ import Study from './components/Study';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
+import SearchBar from './components/SearchBar'
+
 class App extends Component {
 
   render() {
@@ -44,7 +46,7 @@ class App extends Component {
           <Route path='/study' component={Study}/>
         </Switch>
         </Router>
-
+   
       </div>
     );
   }

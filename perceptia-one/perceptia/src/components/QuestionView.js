@@ -24,16 +24,21 @@ class QuestionView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            questions: [],
-            question: null,
-            questionId: null,
-            question_type: null,
-            answerOptions: [],
-            answers: {},
-            counter: 0,
+            questions: [], // All questions in a given quiz (in random order)
+            question: null, // Current question being displayed
+            questionId: null, // ID of the current question
+            questionType: null, //1: Multiple Choice, 2: True or False
+            answerOptions: [], // Possible answers to the question
+            selectedAnswer: null, // Current answer being selected
+            answers: {}, // User selected answers
+            counter: 0, // Keep track of which question is being displayed
+            totalNumber: null, // Keep track of the total number of questions
             completed: false,
 
         }
+        this.setNextQuestion = this.setNextQuestion.bind(this)
+        this.setPreviousQuestion = this.setPreviousQuestion.bind(this)
+        this.handleAnswerSelected = this.handleAnswerSelected.bind(this)
     }
 
     componentDidMount() {
@@ -53,14 +58,15 @@ class QuestionView extends React.Component {
             })
             .then(list => {
                 this.setState({
-                    questions: list
+                    questions: list,
+                    totalNumber: list.length
                 })
                 return list[this.state.counter]
             })
             .then(data => this.setState({
                 question: data.question,
                 answerOptions: data.answer,
-                question_type: data.q_type,
+                questionType: data.q_type,
                 questionId: data.id,
             }))
 
@@ -73,35 +79,78 @@ class QuestionView extends React.Component {
     //setResults() {
     //
     //}
+
+    setPreviousQuestion() {
+
+        if (this.state.counter > 0) {
+            const counter = this.state.counter - 1
+            this.setState({
+                counter: counter,
+                question: this.state.questions[counter].question,
+                answerOptions: this.state.questions[counter].answer,
+                questionId: this.state.questions[counter].id,
+                questionType: this.state.questions[counter].q_type,
+                selectedAnswer: this.state.answers[counter]
+            })
+        } else {
+            // Do nothing, don't change the question 
+            // For future improvement we'll disable the button 
+        }
+ 
+    }
     
     setNextQuestion() {
-        const counter = this.state.counter + 1
-        
-        this.setState({
-            counter: counter,
-            question: this.state.questions[counter].question,
-            answerOptions: this.state.questions[counter].answer,
-            questionId: this.state.questions[counter].id,
-            question_type: this.state.questions[counter].q_type
-        })
+
+        if (this.state.counter < this.state.totalNumber - 1) {
+            const counter = this.state.counter + 1
+            
+            this.setState({
+                counter: counter,
+                question: this.state.questions[counter].question,
+                answerOptions: this.state.questions[counter].answer,
+                questionId: this.state.questions[counter].id,
+                questionType: this.state.questions[counter].q_type,
+                selectedAnswer: this.state.answers[counter]
+            })
+        } else {
+            // Display result
+
+            this.setState({
+                completed: true
+            })
+        }
 
     }
 
+    // Record user answers
+    // Update the question being displayed 
     handleAnswerSelected(event) {
         //this.setUserAnswer(event.currentTarget.value);
-        if (this.state.counter < this.state.questions.length - 1) {
-            setTimeout(() => this.setNextQuestion(), 300);
-        } else {
-            //setTimeout(() => this.setResults(), 300);
-            this.setState({
-                completed:true
-            })
-        }
+        // if (this.state.counter < this.state.questions.length - 1) {
+        //     setTimeout(() => this.setNextQuestion(), 300);
+        // } else {
+        //     setTimeout(() => this.setResults(), 300);
+        //     this.setState({
+        //         completed:true
+        //     })
+        // }
+
+        // If the current key value pair exists in the state replace it
+        // Otherwise append to the dictionary
+
+        // this.setState(prevState => ({
+        //     answers: {
+        //         ...prevState.answers,
+        //         [this.state.counter]: event.currentTarget.value
+        //     },
+        //     selectedAnswer: event.currentTarget.value
+        // }))
+
+        console.log(event)
+
     }
 
     renderLogic() {
-
-        console.log(this.state.completed)
 
         if (this.state.completed) {
 
@@ -114,10 +163,15 @@ class QuestionView extends React.Component {
             return (
                 <Question 
                 question={this.state.question}
-                question_type={this.state.question_type}
+                questionType={this.state.questionType}
                 answerOptions={this.state.answerOptions}
                 questionId={this.state.questionId}
-                onAnswerSelected={() => this.handleAnswerSelected()} />
+                counter={this.state.counter}
+                totalNumber={this.state.totalNumber}
+                selectedAnswer={this.state.selectedAnswer}
+                onSelectPrevious={() => this.setPreviousQuestion()} //Bind this??
+                onSelectNext={() => this.setNextQuestion()}
+                onAnswerSelected={() => console.log("clicked")} />
 
             )
 
