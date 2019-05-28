@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import {
+    AppBar, Button, Toolbar, Typography, withStyles
+} from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
     appBar: {
@@ -26,10 +25,10 @@ function NavBar(props) {
               Perceptia
             </Typography>
             <Button color="primary" variant="outlined">
-              Sign In
+                <Link to={{pathname:props.routes.signIn}}>Sign In</Link>
             </Button>
             <Button color="primary" variant="outlined">
-              Sign Up
+                <Link to={{pathname:props.routes.signUp}}>Sign Up</Link>
             </Button>
           </Toolbar>
         </AppBar>
@@ -38,6 +37,7 @@ function NavBar(props) {
   
   NavBar.propTypes = {
     classes: PropTypes.object.isRequired,
+      routes: PropTypes.object.isRequired,
   };
   
   export default withStyles(styles)(NavBar);

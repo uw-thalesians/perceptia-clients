@@ -60,6 +60,8 @@ Ideally, all three directories (components/scenes/services) will not have subdir
 
 [App.js:](./src/App.js) is the main entrypoint for the application, handling the loading of all parts of the application.
 
+[store.js:](./src/store.js) is the source for creating the primary redux store for the application.
+
 ## [External Modules](#external-modules)
 
 This section describes the main packages used by this project. The purpose of this section is to note any special uses of a package, not to describe all uses. The "Dev Modules" section describes packages used in development but are not part of the production build. Production Modules describes packages used in the production build of the app.
