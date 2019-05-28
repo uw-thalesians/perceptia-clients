@@ -21,7 +21,7 @@ export default class Main extends React.Component {
   render() {
     return (
       <Fragment>
-        <NavBar routes={routes.sign}/>
+        <NavBar routes={routes.sign} />
         <ErrorBoundary context={"An unexpected error has occurred. Please reload the application."}>
           <Switch>
             <Route exact path={routes.root} component={QuizGallery}/>

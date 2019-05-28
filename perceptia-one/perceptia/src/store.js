@@ -1,4 +1,5 @@
 import {combineReducers, createStore} from "redux";
+import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
 
 import {reducer as dataReducer} from './data/reducer';
 import { reducer as servicesReducer } from './services/reducer';
@@ -9,6 +10,6 @@ const appReducer = combineReducers({
 });
 
 
-const store = createStore(appReducer);
+const store = createStore(appReducer, composeWithDevTools());
 
 export default store;
