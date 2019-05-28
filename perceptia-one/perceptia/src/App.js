@@ -22,7 +22,7 @@ import QuestionView from './components/QuestionView';
 
 import Question from './components/Question';
 
-import Study from './components/Study';
+//import Study from './components/Study';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
@@ -41,7 +41,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={QuizGallery}/>
           <Route path='/quiz' component={QuestionView}/>
-          <Route path='/study' component={Study}/>
+          <Route path='/study' component={QuestionView}/>
         </Switch>
         </Router>
 

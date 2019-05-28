@@ -5,21 +5,25 @@ import './quiz.css'
 
 class Study extends React.Component {
 
-    constructor(props) {
+    /*constructor(props) {
         super(props);
-        this.state = {
-            quiz: null,
-            summary: null
-        }
-    }
+
+    }*/
+
+
 
     render() {
+        //console.log("render this",this, this.props.quiz==null, this.props.summary==null);
+        if(this.props.quiz==null && this.props.summary==null) {
+            return (
+                    <span>Loading...</span>
+                    );
+        }
+
         return (
             <div>
-                <div className="App-header">
-                    <h2>{this.props.location.state.selectedQuiz} quiz</h2>
-                </div>
-                <p>{this.props.location.state.quizSummary}</p>
+                <p>{this.props.summary[0].text}</p>
+                <button onClick={this.props.onNext}>Next</button>
             </div>
 
         )

@@ -100,7 +100,7 @@ body {
   
   .radioCustomButton {
     position: absolute;
-    width: auto;
+    /*width: auto;*/
     opacity: 0;
   }
   
@@ -113,7 +113,7 @@ body {
   
   .radioCustomLabel {
     position: relative;
-    width: 100%;
+    /*width: 100%;*/
     margin: 0;
     padding: 1.5rem 2.5rem 1.5rem 5rem;
     font-size: 16px;

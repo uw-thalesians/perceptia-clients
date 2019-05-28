@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import QuizInfo from './QuizInfo';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { DeleteForever, Edit } from "@material-ui/icons";
 import "./quiz.css"
 
 class Question extends React.Component {
@@ -45,20 +46,26 @@ class Question extends React.Component {
                 // <MultipleChoice />
                 <div>
                     <h2 className="question">{this.state.question}</h2>
-                    <ul className="answerOptions">
+                        <Edit/>
+                        <DeleteForever/>
+                        
                         {this.state.answerOptions.map(option => (
-                            <li className="answerOption">
-                                <input 
-                                    type="radio"
-                                    className="radioCustunButton"
-                                    name="radioGroup"
-                                    checked={false}
-                                    onChange={this.props.onAnswerSelected}
-                                />
-                                <label className="radioCustomLabel">{option}</label>
-                            </li>
-                        ))}
-                    </ul>
+                            <div className="answerOption" key={""+this.state.question_id+option}>
+                                <label>
+                                    <input 
+                                        value={option}
+                                        type="radio"
+                                        name="radioGroup"
+                                        checked={false}
+                                        onChange={()=>{console.log("option",option);this.props.onAnswerSelected(option)}}
+                                    />
+                                    {option}
+                                </label>
+                            </div>
+                            )
+                        )
+                        }
+                    
                 </div>
             )
         } else { // q_type == 2
@@ -66,27 +73,33 @@ class Question extends React.Component {
                 // <TrueOrFalse />
                 <div>
                     <h2 className="question">{this.state.question}</h2>
+                    <Edit/>
+                    <DeleteForever/>
                     <ul className="answerOptions">
                       
                         <li className="answerOption">
+                            <label className="radioCustomLabel">
                             <input 
                                 type="radio"
                                 className="radioCustunButton"
                                 name="radioGroup"
                                 checked={false}
-                                onChange={this.props.onAnswerSelected}
+                                onChange={()=>this.props.onAnswerSelected("t")}
+                                value="t"
                             />
-                            <label className="radioCustomLabel">True</label>
+                            True</label>
                         </li>
                         <li className="answerOption">
+                            <label className="radioCustomLabel">
                             <input 
                                 type="radio"
                                 className="radioCustunButton"
                                 name="radioGroup"
                                 checked={false}
-                                onChange={this.props.onAnswerSelected}
+                                onChange={()=>this.props.onAnswerSelected("f")}
+                                value="f"
                             />
-                            <label className="radioCustomLabel">False</label>
+                            False</label>
                         </li>
 
                     </ul>
