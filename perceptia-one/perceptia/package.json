@@ -22,8 +22,10 @@
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.1",
     "react-dom": "^16.8.6",
+    "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "^3.0.1"
+    "react-scripts": "^3.0.1",
+    "redux": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -72,13 +74,14 @@
     "url": "https://github.com/uw-thalesians/perceptia-clients"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-plugin-react": "^7.13.0",
-    "typescript": "^3.4.5",
-    "@storybook/react": "^5.0.11",
+    "@babel/core": "^7.4.5",
     "@storybook/addon-actions": "^5.0.11",
     "@storybook/addon-links": "^5.0.11",
     "@storybook/addons": "^5.0.11",
-    "@babel/core": "^7.4.5"
+    "@storybook/react": "^5.0.11",
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.13.0",
+    "redux-devtools": "^3.5.0",
+    "typescript": "^3.4.5"
   }
 }
