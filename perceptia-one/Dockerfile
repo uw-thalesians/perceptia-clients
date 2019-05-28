@@ -10,7 +10,15 @@ COPY perceptia/ ./
 RUN npm run build
 
 FROM nginx:1.15.11-alpine
-ADD default.conf /etc/nginx/conf.d/default.conf
+# Create directory to hold script
+RUN mkdir -p /script
+WORKDIR /script
+ADD config/perceptia.template /etc/nginx/conf.d/perceptia.template
+ADD config/entrypoint.sh /script/entrypoint.sh
+# Make setup script executable
+RUN chmod +x entrypoint.sh
+
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 EXPOSE 80 443
-CMD ["nginx", "-g", "daemon off;"]
+
+CMD /bin/sh /script/entrypoint.sh

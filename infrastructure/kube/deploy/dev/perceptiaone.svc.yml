@@ -16,13 +16,13 @@ spec:
   selector:
     app: perceptiaone
   ports:
-  - protocol: TCP
+  - name: https
+    protocol: TCP
     port: 443
     targetPort: https
-    name: https
-  - protocol: TCP
+  - name: http
+    protocol: TCP
     port: 80
     targetPort: http
-    name: http
-  loadBalancerIP: 13.77.142.127
+  loadBalancerIP: 52.247.197.5
   type: LoadBalancer

@@ -52,6 +52,10 @@ The root of the PerceptiaOne directory contains the supporting files for buildin
 
 [Perceptia:](./perceptia/) Directory containing the source code for the PerceptiaOne web client.
 
+### [NGINX Config](#nginx-config)
+
+[config:](./config/) Directory containing the config for the nginx server.
+
 ## [Setup](#setup)
 
 The perceptia react app is designed to be deployed using a linux container. The following subsections explain how this container is built and how to use it. The perceptia react app is currently built on the [Nginx](https://hub.docker.com/_/node/) image `node:10.15.3`, and the perceptiaone image is then based off the [Nginx](https://hub.docker.com/_/nginx/) image `nginx:1.15.11-alpine`.
@@ -88,6 +92,18 @@ Please refer to the description on the [container registry](https://hub.docker.c
 
 This section list any configuration options for the custom image.
 
+##### [Container Environment Variables](#custom-image-env-vars)
+
+Environment variables must be passed to be accessible to the entrypoint.sh script (such as using the --env flag with the docker run commnad)
+
+Use the following variables to configure the nginx server for the given environment.
+
+`PONE_SERVER_HOST={hostname}` (REQUIRED) configures the hostname that the server is serving files for.
+
+`PONE_TLS_CERT={fileName}` (REQUIRED) should be the name of the tls cert mounted into the volume at "/etc/sitecert/"
+
+`PONE_TLS_KEY={fileName}` (REQUIRED) should be the name of the tls key mounted into the volume at "/etc/sitecert/"
+
 ## [Start Server Locally](#start-server-locally)
 
 This setup explains how to build and start the server locally.
@@ -116,11 +132,11 @@ Run: `.\locaStartExample.ps1`
 
 However, **if you want to build the image locally from source**, you need to include the -BuildPOne switch parameter.
 
-Run: `.\locaStartExample.ps1 -BuildPOne`
+    Run: `.\locaStartExample.ps1 -BuildPOne`
 
 Note, **if you want to build the image locally from source but want to use an api server that is not the default**, you need to include the options defined below: -ApiServerHost, -ApiServerScheme, -ApiServerPort.
 
-Run: `.\locaStartExample.ps1 -BuildPOne`
+    Run: `.\locaStartExample.ps1 -BuildPOne -ApiServerDev`
 
 `-ApiServerHost` (string) which is the host that the website should make api calls to. Default value is "localhost". Note, if you do not use the -BuildPOne switch option, the only host the client will use is "api.dev.perceptia.info"
 
@@ -128,11 +144,21 @@ Run: `.\locaStartExample.ps1 -BuildPOne`
 
 `-ApiServerPort` (string) which is the port that the website should make api calls to. Default value is "4443". Note, if you do not use the -BuildPOne switch option, the only port the client will use is "443"
 
+`-ApiServerProd` (switch) valid when -BuildPOne flag not set, will build the perceptiaone image with the ApiServer* values set to use the api.perceptia.info server, overriding any of the specic -ApiServer options
+
+`-ApiServerDev` (switch) valid when -BuildPOne flag not set, will build the perceptiaone image with the ApiServer* values set to use the api.dev.perceptia.info server, overriding any of the specic -ApiServer options
+
 `-POnePortPublish` (string) which is the port to publish the perceptiaone container if run by this script, default is: "4444"
+
+`-POneVersion` (String) sets the version of the perceptiaone image to use, default is a known stable version of the image from the develop branch
 
 `-BuildPOne` (switch) will build the perceptiaone image using the local source, default is: false. To set true, include the switch
 
 `-Latest` (switch) will use the latest version of the perceptiaone image build for the develop branch, instead of a spcific version
+
+`-CurrentBranch` (Switch) when set, uses the name of the current branch to specify the images to use, if on branch "feature/peacock-local-start" would use images with the branch tag "peacock-local-start", default false
+
+`-CleanUp` (switch) will remove the container(s) started by this script
 
 ### [Start with Docker Commands](#start-with-docker-commands)
 

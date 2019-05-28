@@ -1,6 +1,6 @@
 # Do not send dependencies or local builds
 *
 !perceptia
-!default.conf
+!config/
 perceptia/node_modules
 perceptia/build
