@@ -115,7 +115,7 @@ class QuestionView extends React.Component {
             questionId: this.state.questions[counter].id,
             question_type: +this.state.questions[counter].q_type,
             paragraph_id: this.state.questions[counter].p_id,
-        })
+        }));
 
     };
 
