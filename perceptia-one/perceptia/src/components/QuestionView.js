@@ -87,7 +87,7 @@ class QuestionView extends React.Component {
             .then(data => this.setState({
                 question: data.question,
                 answerOptions: data.answer,
-                question_type: data.q_type,
+                question_type: +data.q_type,
                 questionId: data.id,
                 paragraph_id: this.state.questions[this.state.counter].p_id,
             }))
@@ -110,7 +110,7 @@ class QuestionView extends React.Component {
             question: this.state.questions[counter].question,
             answerOptions: this.state.questions[counter].answer,
             questionId: this.state.questions[counter].id,
-            question_type: this.state.questions[counter].q_type,
+            question_type: +this.state.questions[counter].q_type,
             paragraph_id: this.state.questions[counter].p_id,
         })
 
