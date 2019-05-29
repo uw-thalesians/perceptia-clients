@@ -171,7 +171,6 @@ class QuestionView extends React.Component {
 
         } else {
 
-            console.log(this.state.mode==="study", this.state.paragraph_index <= this.state.counter, this.state.paragraph_id < this.state.paragraphs[this.state.paragraph_index].id)
             if(this.state.mode==="study" && this.state.paragraph_index <= this.state.counter){
                 
                 var psummary = this.state.paragraphs.filter((p)=> p.id == this.state.paragraph_id)
