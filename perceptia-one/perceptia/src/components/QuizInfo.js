@@ -68,7 +68,7 @@ class QuizInfo extends React.Component {
           <CardMedia
             className={classes.media}
             image={this.state.imageurl}
-            title="placeholder"
+            title={this.state.quiz}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
@@ -82,8 +82,8 @@ class QuizInfo extends React.Component {
           <Link to={{
             pathname: './study',
             state: {
+              mode: "study",
               selectedQuiz: this.state.quiz,
-              quizSummary: this.state.summary
             }
           }}>
             <Button 
@@ -96,7 +96,8 @@ class QuizInfo extends React.Component {
           <Link to={{
             pathname: './quiz',
             state: {
-              selectedQuiz:this.state.quiz
+              mode: "quiz",
+              selectedQuiz:this.state.quiz,
             }
           }}>
             <Button 
