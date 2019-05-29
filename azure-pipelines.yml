@@ -1,19 +1,83 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# File: azure-pipelines.yml
+# Main AZP YAML file
+
+name: $(Build.BuildId)
+
+variables:
+  - group: Common
+  - group: Web
+  - group: WebDevelopment # Change for release to production
+  # Client Variables
+  - name: PerceptiaOneVersionMajor
+    value: '0'
+  - name: PerceptiaOneVersionMinor
+    value: '1'
+  - name: PerceptiaOneVersionPatch
+    value: '1'
+  - name: PerceptiaOneImageQualified
+    value: '$(DockerHubOrg)/$(PerceptiaOneImageName)'
+
+  
 
 trigger:
-- master
+  branches:
+    include:
+    - master
+    - develop
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+      - infrastructure/azp/*
+      - '*'
+    exclude:
+    - README.md
+    - infrastructure/*
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+pr:
+  autoCancel: "true"
+  branches:
+    include:
+    - master
+    - develop
+    - release/*
+  paths:
+    exclude:
+    - README.md
+    - infrastructure/*
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+jobs:
+- job: 'TestPerceptiaOneUnitTests'
+- job: 'BuildPerceptiaOneImage'
+  variables:
+  - name: ImageQualified 
+    value: $(PerceptiaOneImageQualified)
+  - name: ImageVersionMajor
+    value: $(PerceptiaOneVersionMajor)
+  - name: ImageVersionMinor
+    value: $(PerceptiaOneVersionMinor)
+  - name: ImageVersionPatch
+    value: $(PerceptiaOneVersionPatch)
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  dependsOn: 'TestPerceptiaOneUnitTests'
+  condition: succeeded()
+  steps:
+  - task: Docker@1
+    displayName: 'Build image'
+    inputs:
+      command: Build an image
+      dockerFile: '$(system.defaultWorkingDirectory)/perceptia-one/Dockerfile'
+      imageName: $(ImageQualified)
+      qualifyImageName: false
+      arguments: "--build-arg REACT_APP_WEB_SERVER_HOST=$(WebServerHost) --build-arg REACT_APP_API_SERVER_HOST=$(ApiServerHost) --build-arg REACT_APP_API_SERVER_PORT=$(ApiServerPort) --build-arg REACT_APP_API_SERVER_SCHEME=$(ApiServerScheme)"
+  - template: './infrastructure/azp/template/step/dockerStandardTagPush.yml'
+    parameters:
+      qualifiedImageName: $(ImageQualified)
+      versionMajor: $(ImageVersionMajor)
+      versionMinor: $(ImageVersionMinor)
+      versionPatch: $(ImageVersionPatch)
+      buildId: $(Build.BuildId)
+      branch: $(Build.SourceBranchName)
+      tagProduction: or(eq(variables[ 'productionTags'], 'true'), startsWith(variables['Build.SourceBranch'], 'refs/heads/master/'))
