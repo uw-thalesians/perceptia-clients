@@ -6,7 +6,7 @@ name: $(Build.BuildId)
 variables:
   - group: Common
   - group: Web
-  - group: WebDevelopment # Change for release to production
+  - group: WebProduction # Change for release to production
   # Client Variables
   - name: PerceptiaOneVersionMajor
     value: '0'
