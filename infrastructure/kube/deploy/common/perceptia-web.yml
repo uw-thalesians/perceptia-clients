@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: perceptiaone
-        image: uwthalesians/perceptiaone:0.1.1-build-367-branch-master
+        image: uwthalesians/perceptiaone:0.1.1-build-372-branch-master
         ports:
         - name: https
           containerPort: 443
