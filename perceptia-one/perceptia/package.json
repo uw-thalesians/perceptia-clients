@@ -18,14 +18,16 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
+    "@material-ui/styles": "^4.0.1",
+    "clsx": "^1.0.4",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-addons-css-transition-group": "^15.6.2",
+    "react-app-polyfill": "^1.0.1",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
-    "react-transition-group": "^4.0.1",
-    "react-app-polyfill": "^1.0.1"
+    "react-transition-group": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -72,7 +74,6 @@
     "url": "https://github.com/uw-thalesians/perceptia-clients"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.13.0",
     "typescript": "^3.4.5"
   }
