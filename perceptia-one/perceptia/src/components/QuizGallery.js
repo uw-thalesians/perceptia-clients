@@ -100,7 +100,7 @@ class QuizGallery extends React.Component {
                     var temp = [quiz]
                     this.setState(prevState => ({
                         fetchInProgress: false, 
-                        quizlist: [prevState.quizlist, quiz],
+                        quizlist: [quiz, ...prevState.quizlist],
                         currentquiz: temp
                     }))
                     // Need to fix this before merging 
