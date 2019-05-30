@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {CheckCircle, NotInterested} from '@material-ui/icons';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Results extends React.Component{
 
@@ -24,7 +24,7 @@ class Results extends React.Component{
     //const classes = useStyles();
     console.log(this);
     if(!this || !this.props){
-      return (<span>Loading...</span>)
+      return (<span><CircularProgress/></span>);
     }
 
     return (

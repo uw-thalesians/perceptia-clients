@@ -12,11 +12,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import QuizInfo from './QuizInfo';
 import Question from './Question';
 import constants from './constants';
-import Results from './Results'
+import Results from './Results';
 import Study from './Study';
 import './quiz.css';
 
@@ -25,7 +26,10 @@ class QuestionView extends React.Component {
 
     constructor(props) {
         super(props);
+
+        console.log(props);
         this.state = {
+            selectedQuiz: null,
             questions: [],
             question: null,
             questionId: null,
@@ -38,16 +42,19 @@ class QuestionView extends React.Component {
             paragraph: null,
             completed: false,
             grades: [],
-            mode: "normal",
-        }
+            mode: "quiz",
+            busy: false,
+        };
     }
 
     componentDidMount() {
 
+        console.log(this.props, this.state);
+
         const { selectedQuiz } = this.props.location.state;
         
-        var mode = this.props.location.state.mode
-        var mode_url = "quiz";
+        var mode = this.props.location.state.mode;
+        var mode_url = "questions";
 
         if(mode==="quiz") {
             mode_url = "questions";
@@ -62,35 +69,44 @@ class QuestionView extends React.Component {
                 for (var i = 0; i < response.questions.length; i++) {
                     list.push(response.questions[i])
                 }*/
-               
+                console.log("processing api response", response);
+
                 var paragraphs = null;
                 var paragraph = null;
-                if(response.paragraphs != undefined){
+
+                if(Object.keys(response).includes("paragraphs")){
                     paragraphs = response.paragraphs;
                     paragraph = paragraphs[0];
                 }
 
+                var questions = response.questions;
+                var p_id = response.questions[this.state.counter].p_id;
+
                 this.setState({
                     paragraphs: paragraphs,
                     paragraph: paragraph,
-                    questions: response.questions,
+                    questions: questions,
                     mode: mode,
-                    paragraph_id: response.questions[this.state.counter].p_id,
-                })
+                    paragraph_id: p_id,
+                });
 
-                return response.questions
+                return response.questions;
 
             })
             .then(list => {
-                return list[this.state.counter]
+                console.log("passing first question");
+                return list[this.state.counter];
             })
-            .then(data => this.setState({
-                question: data.question,
-                answerOptions: data.answer,
-                question_type: +data.q_type,
-                questionId: data.id,
-                paragraph_id: this.state.questions[this.state.counter].p_id,
-            }))
+            .then(data => {
+                    console.log("initializing")
+                    this.setState({
+                    question: data.question,
+                    answerOptions: data.answer,
+                    question_type: +data.q_type,
+                    questionId: data.id,
+                    paragraph_id: this.state.questions[this.state.counter].p_id,
+                });
+            });
 
     }
 
@@ -103,7 +119,7 @@ class QuestionView extends React.Component {
     //}
     
     setNextQuestion() {
-        const counter = this.state.counter + 1
+        const counter = this.state.counter + 1;
         
         this.setState({
             counter: counter,
@@ -112,38 +128,46 @@ class QuestionView extends React.Component {
             questionId: this.state.questions[counter].id,
             question_type: +this.state.questions[counter].q_type,
             paragraph_id: this.state.questions[counter].p_id,
-        })
+            busy: false,
+        });
 
     }
 
     handleAnswerSelected(answer) {
 
-        console.log(answer);//, event.currentTarget.value);
-        //this.setUserAnswer(event.currentTarget.value);
-        if (this.state.counter < this.state.questions.length - 1) {
-            var body = JSON.stringify({
-                "questionID":`${this.state.questionId}`,
-                "selectedAnswer": `${answer}`});
-
-            fetch(`${constants.api.url}/api/v1/anyquiz/questions/grade`, {
-                method: 'post',
-                body: body,
-            })
-            .then( response => response.json())
-            .then(response =>{
-
-                this.setState({grades: this.state.grades.concat([response["result"]])})
-
-            }).then(() => this.setNextQuestion())
-            //setTimeout(, 300);
-        } else {
-            
-            //setTimeout(() => this.setResults(), 300);
-            this.setState({
-                completed:true,
-                counter: this.state.counter+1
-            })
+        console.log(answer);
+        
+        if(answer==null){
+            this.setState({grades: this.state.grades.concat([false])});
+            this.setNextQuestion();
+            return;
         }
+
+        var body = JSON.stringify({
+            "questionID":`${this.state.questionId}`,
+            "selectedAnswer": `${answer}`});
+
+        fetch(`${constants.api.url}/api/v1/anyquiz/questions/grade`, {
+            method: 'post',
+            body: body,
+        })
+        .then( response => response.json())
+        .then(response =>{
+
+            this.setState({grades: this.state.grades.concat([response["result"]])});
+
+        }).then(() => {
+            if (this.state.counter < this.state.questions.length - 1) {
+                this.setNextQuestion();
+            } else {
+                this.setState({
+                    completed:true,
+                    counter: this.state.counter+1
+                });
+            }
+            
+        });
+        
     }
 
     handlePairedQuestions(event) {
@@ -157,39 +181,45 @@ class QuestionView extends React.Component {
             //setTimeout(() => this.setResults(), 300);
             this.setState({
                 completed:true
-            })
+            });
         }
     }
 
     renderLogic() {
 
+        console.log("rerendering");
         if (this.state.completed) {
 
             return (
                 <Results questions={this.state.questions} grades={this.state.grades}/>
-            )
+            );
 
         } else {
 
             if(this.state.mode==="study" && this.state.paragraph_index <= this.state.counter){
                 
-                var psummary = this.state.paragraphs.filter((p)=> p.id == this.state.paragraph_id)
+                var psummary = this.state.paragraphs.filter((p)=> p.id == this.state.paragraph_id);
 
                 return <Study 
                     quiz={this.props.location.state.selectedQuiz}
                     summary={psummary}
-                    onNext={() => this.handlePairedQuestions()} />
+                    onNext={() => this.handlePairedQuestions()} />;
             }
 
+            console.log(this.state);
+
+            //uses key to tell react the question has changed and needs new object,
+            //look into memoization helper
             return (
-                <Question 
+                <Question key={"question_"+ this.state.questionId}
                 question={this.state.question}
                 question_type={this.state.question_type}
                 answerOptions={this.state.answerOptions}
                 questionId={this.state.questionId}
-                onAnswerSelected={(option)=>this.handleAnswerSelected(option)} />
+                onAnswerSelected={(option)=>this.handleAnswerSelected(option)} 
+                busy={this.state.busy}/>
 
-            )
+            );
 
         }
     }
@@ -197,14 +227,13 @@ class QuestionView extends React.Component {
     render() {
 //<!-- className="App-header">-->
 //console.log(this);
-        if (this.state.questions.length > 0) {
+        if (this.state.question != null) {
             return(
                 <div>
                     <div>
-                        <h2>{this.props.location.state.selectedQuiz} {this.state.mode=="normal"?"quiz":"study"}</h2>
+                        <h2>{this.props.location.state.selectedQuiz} {this.state.mode=="quiz"?"quiz":"study"}</h2>
 
                         <div className="progress">
-                            <div id="question-progress" className="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" ariavalue-max="10"></div>
                             <LinearProgress variant="determinate" value={this.state.counter*100/this.state.questions.length}/>
                         </div>
                     </div>
@@ -215,7 +244,7 @@ class QuestionView extends React.Component {
 
         return (
             <div>
-                Loading
+                <CircularProgress/>
             </div>
         );
 
