@@ -24,7 +24,7 @@ class Question extends React.Component {
             newText:"",
             newAnswer:"",
             busy: false,
-        }
+        };
     }
 
 
@@ -82,7 +82,7 @@ class Question extends React.Component {
 
         switch(this.state.question_type) {
             case questionTypeMultipleChoice:
-                console.log("q_type 1")
+                console.log("q_type 1");
                 return (<ul className="answerOptions">
                     {this.state.answerOptions.map(option => {
                     return (<li className="answerOption">
@@ -107,7 +107,7 @@ class Question extends React.Component {
                 );
 
             case questionTypeTrueFalse:
-                console.log("q type 2")
+                console.log("q type 2");
                 return (<ul className="answerOptions">
     
                 <li className="answerOption">
@@ -171,8 +171,8 @@ class Question extends React.Component {
         defaultValue={this.state.question}
       />:<h2 className="question">{this.state.question}</h2>}
                         <div id="editControls">
-                            <Edit onClick={()=>{ if(!this.state.edit) this.setState({"edit": true})} }/>
-                            <NotInterested onClick={()=>{ if(this.state.edit) this.setState({"edit":false})} } style={{"color":this.state.edit?"black":"grey"}}/>
+                            <Edit onClick={()=>{ if(!this.state.edit) this.setState({"edit": true});} }/>
+                            <NotInterested onClick={()=>{ if(this.state.edit) this.setState({"edit":false});} } style={{"color":this.state.edit?"black":"grey"}}/>
                             <SaveOutlined onClick={()=>{
                                 if(this.state.edit) {
                                     this.sendQuestionEdit(); 
