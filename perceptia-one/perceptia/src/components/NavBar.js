@@ -24,11 +24,11 @@ function NavBar(props) {
             <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle} onClick={props.hi}>
               Perceptia
             </Typography>
-            <Button color="primary" variant="outlined">
-                <Link to={{pathname:props.routes.signIn}}>Sign In</Link>
+            <Button color="primary" variant="outlined" onClick={() => {props.history.push(props.routes.signIn);}}>
+               Sign In
             </Button>
-            <Button color="primary" variant="outlined">
-                <Link to={{pathname:props.routes.signUp}}>Sign Up</Link>
+            <Button color="primary" variant="outlined" onClick={() => {props.history.push(props.routes.signUp);}}>
+                Sign Up
             </Button>
           </Toolbar>
         </AppBar>
