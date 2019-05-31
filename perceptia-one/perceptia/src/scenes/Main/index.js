@@ -25,8 +25,7 @@ export default class Main extends React.Component {
         <ErrorBoundary context={"An unexpected error has occurred. Please reload the application."}>
           <Switch>
             <Route exact path={routes.root} component={QuizGallery}/>
-            <Route path={routes.quizMode} component={QuestionView}/>
-            <Route path={routes.studyMode} component={Study}/>
+            <Route path={[routes.quizMode, routes.studyMode]} component={QuestionView}/>
             <Route path={[routes.sign.signUp, routes.sign.signIn]} render={() => <Sign routes={routes.sign}/>}/>
             <Route component={NotFound}/>
           </Switch>

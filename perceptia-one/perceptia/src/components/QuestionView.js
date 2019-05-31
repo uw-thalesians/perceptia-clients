@@ -192,7 +192,7 @@ class QuestionView extends React.Component {
 //console.log(this);
         if (this.state.questions.length > 0) {
             return(
-                <div>
+                <div className={"Center-Align"}>
                     <div>
                         <h2>{this.props.location.state.selectedQuiz} {this.state.mode==="normal"?"quiz":"study"}</h2>
 
@@ -207,7 +207,7 @@ class QuestionView extends React.Component {
         }
 
         return (
-            <div>
+            <div className={"Center-Align"}>
                 Loading
             </div>
         );
