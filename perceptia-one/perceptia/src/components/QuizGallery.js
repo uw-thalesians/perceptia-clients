@@ -17,6 +17,8 @@ import QuestionView from './QuestionView';
 import NavBar from './NavBar';
 import Footer from './Footer';
 import constants from './constants';
+import SearchBar from './SearchBar';
+import SnackBar from './SnackBar';
 
 const styles = {
     cardGrid: {
@@ -34,12 +36,15 @@ class QuizGallery extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            quizlist: []
+            quizlist: [],
+            currentquiz: [],
+            fetchInProgress:false,
+            fetchStatus: "Starting...",
+            errorMessage: ""
         }
     }
 
     componentDidMount() {
-        console.log(`${constants.api.url}/api/v1/anyquiz/list`)
 	    fetch(`${constants.api.url}/api/v1/anyquiz/list`)
             .then(response => response.json())
             .then(response => {
@@ -52,33 +57,87 @@ class QuizGallery extends React.Component {
 
             })
             .then(list => this.setState({
-                quizlist: list
+                quizlist: list,
+                currentquiz: list
             }))
     }
 
-    // handleChildClick(component, event) {
-    //     this.setState({
-    //         selectedQuiz:component.props.quizName
-    //     })
-    //     this.props.liftStateUp(component.props.quizName)
-    // }
+    fetchStatus(InProgress, quiz) {
+        if (InProgress) {
+            fetch(`${constants.api.url}/api/v1/anyquiz/status/` + quiz)
+                .then(response => response.json())
+                .then(response => this.setState({
+                    fetchStatus: response.status_string
+                }))
+        }
+
+    }
+
+    handleSearchQuiz(quiz) {
+     
+        if (quiz == "") {
+            this.setState({
+                currentquiz: this.state.quizlist
+            })
+        } else if (this.state.quizlist.includes(quiz)) {
+            var temp = [quiz]
+            this.setState({
+                currentquiz: temp
+            })
+        } else {
+            this.setState({
+                fetchInProgress: true
+            })
+
+            fetch(`${constants.api.url}/api/v1/anyquiz/read/` + quiz)
+                .then(response => {
+                    if (!response.ok) {
+                        throw Error(response.statusText)
+                    }
+                    return response
+                })
+                .then(response => {
+                    var temp = [quiz]
+                    this.setState(prevState => ({
+                        fetchInProgress: false, 
+                        quizlist: [...prevState.quizlist, quiz],
+                        currentquiz: temp
+                    }))
+                
+                })
+                .catch(error => this.setState({
+                    fetchInProgress: false,
+                    errorMessage: error
+                }))
+
+            this.interval = setInterval(() => {
+                this.fetchStatus(this.state.fetchInProgress, quiz)
+            }, 5000)
+        }
+
+    }
 
     render() {
         const { classes } = this.props;
         
         return (
             <div>
-            <NavBar/>
+                <NavBar/>
 
-            <Grid container spacing={40}>
-            {this.state.quizlist.map(name => (
-            <Grid item key={name} sm={6} md={4} lg={3}>
-                <QuizInfo quizName={name}/>
-            </Grid>
-            ))}
-            </Grid>
+                <SearchBar onSearchQuiz={this.handleSearchQuiz.bind(this)}/>
+                {
+                    this.state.fetchInProgress ?
+                        <SnackBar text={this.state.fetchStatus} /> : 
+                    <Grid container spacing={40}>
+                    {this.state.currentquiz.map(name => (
+                    <Grid item key={name} sm={6} md={4} lg={3}>
+                        <QuizInfo quizName={name}/>
+                    </Grid>
+                    ))}
+                    </Grid>
+                }
 
-            <Footer/>
+                <Footer/>
             </div>
         )
     }
