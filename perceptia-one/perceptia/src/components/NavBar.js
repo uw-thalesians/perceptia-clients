@@ -21,7 +21,7 @@ function NavBar(props) {
     return (
         <AppBar position="static" color="default" className={classes.appBar}>
           <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle} onClick={props.hi}>
+            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle} onClick={() => {props.history.push('/');}}>
               Perceptia
             </Typography>
             <Button color="primary" variant="outlined" onClick={() => {props.history.push(props.routes.signIn);}}>

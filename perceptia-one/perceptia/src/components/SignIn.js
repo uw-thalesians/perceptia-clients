@@ -4,25 +4,6 @@ import {
   Button, Checkbox, CssBaseline, FormControl, FormControlLabel, Input, InputLabel, Paper, Typography, withStyles
 } from '@material-ui/core';
 
-/*const SVG = ({
-    style = {},
-    fill = '#fff',
-    width = '100%',
-    className = '',
-    height = '100%',
-    viewBox = '0 0 32 32',
-  }) => 
-    <svg
-      width={width}
-      style={style}
-      height={height}
-      viewBox={viewBox}
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink"
-    >
-        <path d="./img/brand.svg" fill={fill} />
-    </svg>;*/
 
 const styles = theme => ({
   main: {

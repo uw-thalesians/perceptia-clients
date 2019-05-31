@@ -159,6 +159,7 @@ class SignUp extends React.Component {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled
             >
               Sign Up
             </Button>
