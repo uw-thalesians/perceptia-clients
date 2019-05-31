@@ -76,10 +76,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
-    "@storybook/addon-actions": "^5.0.11",
-    "@storybook/addon-links": "^5.0.11",
-    "@storybook/addons": "^5.0.11",
-    "@storybook/react": "^5.0.11",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.13.0",
     "redux-devtools": "^3.5.0",
