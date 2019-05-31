@@ -4,7 +4,7 @@ import {
     AppBar, Button, Toolbar, Typography, withStyles
 } from '@material-ui/core';
 
-const styles = theme => ({
+const styles = () => ({
     appBar: {
       position: 'relative',
     },

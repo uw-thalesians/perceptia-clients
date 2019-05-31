@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {Grid, withStyles} from '@material-ui/core';
-import {QuizInfo} from './index.js';
+import {QuizInfo} from './';
 import constants from './constants';
 
 const styles = {

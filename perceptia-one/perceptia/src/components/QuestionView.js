@@ -3,11 +3,9 @@ import {
     LinearProgress
 } from '@material-ui/core';
 
-
-import Question from './Question';
+import {Question, Results, Study} from './';
 import constants from './constants';
-import Results from './Results';
-import Study from './Study';
+
 import './quiz.css';
 
 
