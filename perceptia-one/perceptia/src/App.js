@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Switch , Route} from "react-router-dom";
 import { Provider } from 'react-redux';
 
-import Main from './scenes/Main';
+import Main from 'scenes/Main';
 import store from './store';
 
-import './App.css';
+import 'App.css';
 
-const root = '/'
+const root = '/';
 
 class App extends React.Component {
 
