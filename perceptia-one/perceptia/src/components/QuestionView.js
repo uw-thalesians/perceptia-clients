@@ -36,7 +36,7 @@ class QuestionView extends React.Component {
 
         const { selectedQuiz } = this.props.location.state;
         
-        var mode = this.props.location.state.mode
+        var mode = this.props.location.state.mode;
         var mode_url = "quiz";
 
         if(mode==="quiz") {
@@ -68,11 +68,11 @@ class QuestionView extends React.Component {
                     paragraph_id: response.questions[this.state.counter].p_id,
                 });
 
-                return response.questions
+                return response.questions;
 
             })
             .then(list => {
-                return list[this.state.counter]
+                return list[this.state.counter];
             })
             .then(data => this.setState({
                 question: data.question,
@@ -125,9 +125,9 @@ class QuestionView extends React.Component {
             .then( response => response.json())
             .then(response =>{
 
-                this.setState({grades: this.state.grades.concat([response["result"]])})
+                this.setState({grades: this.state.grades.concat([response["result"]])});
 
-            }).then(() => this.setNextQuestion())
+            }).then(() => this.setNextQuestion());
             //setTimeout(, 300);
         } else {
             
@@ -197,7 +197,7 @@ class QuestionView extends React.Component {
                         <h2>{this.props.location.state.selectedQuiz} {this.state.mode==="normal"?"quiz":"study"}</h2>
 
                         <div className="progress">
-                            <div id="question-progress" className="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" ariavalue-max="10"></div>
+                            <div id="question-progress" className="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" ariavalue-max="10"/>
                             <LinearProgress variant="determinate" value={this.state.counter*100/this.state.questions.length}/>
                         </div>
                     </div>

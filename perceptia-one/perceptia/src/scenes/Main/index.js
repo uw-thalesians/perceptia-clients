@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {Switch, Route} from "react-router-dom";
-import {Footer, NavBar, QuestionView, QuizGallery, Study} from "../../components";
+import {Footer, NavBar, QuestionView, QuizGallery} from "../../components";
 import ErrorBoundary from './../../components/ErrorBoundary';
 import NotFound from './../../components/NotFound';
 import Sign from './../Sign/';

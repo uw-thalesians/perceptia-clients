@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
     AppBar, Button, Toolbar, Typography, withStyles
 } from '@material-ui/core';
-import { Link } from "react-router-dom";
 
 const styles = theme => ({
     appBar: {
