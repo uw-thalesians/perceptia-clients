@@ -1,22 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import QuizInfo from './QuizInfo';
+import {
+    LinearProgress
+} from '@material-ui/core';
+
+
 import Question from './Question';
 import constants from './constants';
-import Results from './Results'
+import Results from './Results';
 import Study from './Study';
 import './quiz.css';
 
@@ -39,7 +29,7 @@ class QuestionView extends React.Component {
             completed: false,
             grades: [],
             mode: "normal",
-        }
+        };
     }
 
     componentDidMount() {
@@ -65,7 +55,7 @@ class QuestionView extends React.Component {
                
                 var paragraphs = null;
                 var paragraph = null;
-                if(response.paragraphs != undefined){
+                if(response.paragraphs !== undefined){
                     paragraphs = response.paragraphs;
                     paragraph = paragraphs[0];
                 }
@@ -76,7 +66,7 @@ class QuestionView extends React.Component {
                     questions: response.questions,
                     mode: mode,
                     paragraph_id: response.questions[this.state.counter].p_id,
-                })
+                });
 
                 return response.questions
 
@@ -90,7 +80,7 @@ class QuestionView extends React.Component {
                 question_type: +data.q_type,
                 questionId: data.id,
                 paragraph_id: this.state.questions[this.state.counter].p_id,
-            }))
+            }));
 
     }
 
@@ -110,11 +100,11 @@ class QuestionView extends React.Component {
         
         this.setState((state) =>({
             counter: counter,
-            question: this.state.questions[counter].question,
-            answerOptions: this.state.questions[counter].answer,
-            questionId: this.state.questions[counter].id,
-            question_type: +this.state.questions[counter].q_type,
-            paragraph_id: this.state.questions[counter].p_id,
+            question: state.questions[counter].question,
+            answerOptions: state.questions[counter].answer,
+            questionId: state.questions[counter].id,
+            question_type: state.questions[counter].q_type,
+            paragraph_id: state.questions[counter].p_id,
         }));
 
     };
@@ -145,7 +135,7 @@ class QuestionView extends React.Component {
             this.setState({
                 completed:true,
                 counter: this.state.counter+1
-            })
+            });
         }
     }
 
@@ -170,18 +160,18 @@ class QuestionView extends React.Component {
 
             return (
                 <Results questions={this.state.questions} grades={this.state.grades}/>
-            )
+            );
 
         } else {
 
             if(this.state.mode==="study" && this.state.paragraph_index <= this.state.counter){
                 
-                var psummary = this.state.paragraphs.filter((p)=> p.id == this.state.paragraph_id)
+                var psummary = this.state.paragraphs.filter((p)=> p.id === this.state.paragraph_id);
 
                 return <Study 
                     quiz={this.props.location.state.selectedQuiz}
                     summary={psummary}
-                    onNext={() => this.handlePairedQuestions()} />
+                    onNext={() => this.handlePairedQuestions()} />;
             }
 
             return (
@@ -204,7 +194,7 @@ class QuestionView extends React.Component {
             return(
                 <div>
                     <div>
-                        <h2>{this.props.location.state.selectedQuiz} {this.state.mode=="normal"?"quiz":"study"}</h2>
+                        <h2>{this.props.location.state.selectedQuiz} {this.state.mode==="normal"?"quiz":"study"}</h2>
 
                         <div className="progress">
                             <div id="question-progress" className="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" ariavalue-max="10"></div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
-import './quiz.css'
+import './quiz.css';
 import { NavigateNext } from "@material-ui/icons";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';

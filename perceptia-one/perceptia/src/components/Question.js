@@ -1,28 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import QuizInfo from './QuizInfo';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import {
+    Button, TextField, CircularProgress
+} from '@material-ui/core';
 import { DeleteForever, Edit, SaveOutlined, NotInterested, NavigateNext } from "@material-ui/icons";
-import "./quiz.css"
+
+import "./quiz.css";
 import constants from "./constants";
-import CircularProgress from '@material-ui/core/CircularProgress';
 
-import './quiz.css';
 
-let quizTypeMultipleChoice = '1';
-//let quizTypeTrueFalse = '2'
+let questionTypeMultipleChoice = 1;
+let questionTypeTrueFalse = 2;
 
 class Question extends React.Component {
     constructor(props) {
@@ -50,7 +38,7 @@ class Question extends React.Component {
             answerOptions:nextProps.answerOptions,
             newAnswer:"",
             busy: false,
-        }
+        };
     }
 
     deleteQuestion(){
@@ -93,7 +81,7 @@ class Question extends React.Component {
         console.log(this.state);
 
         switch(this.state.question_type) {
-            case 1:
+            case questionTypeMultipleChoice:
                 console.log("q_type 1")
                 return (<ul className="answerOptions">
                     {this.state.answerOptions.map(option => {
@@ -118,7 +106,7 @@ class Question extends React.Component {
                         </li>);})}</ul>
                 );
 
-            case 2:
+            case questionTypeTrueFalse:
                 console.log("q type 2")
                 return (<ul className="answerOptions">
     
@@ -201,7 +189,7 @@ class Question extends React.Component {
                         </div>
                         {this.state.busy?<CircularProgress/>:optionsNodes}
                 </div>
-            )
+            );
     }
 
 }
