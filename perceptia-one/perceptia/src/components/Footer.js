@@ -16,19 +16,22 @@ const styles = theme => ({
 const footers = [
    {
      title: 'About',
-     description: ['Team', 'Contact us'],
+     options: [{
+       title: 'Team',
+       url: 'https://www.capstone.perceptia.info/#team'
+     }, {title: 'Contact Us', url: 'mailto:uw-thalesians@u.washington.edu'}],
    },
    {
      title: 'Explore',
-     description: ['AnyQuiz', 'Summary', 'Knowledge Graph'],
+     options: [{title: 'AnyQuiz', url: 'http://students.washington.edu/long27km/any_quiz/'}],
    },
    {
      title: 'Resources',
-     description: ['Documentation', 'Related Research', 'FAQ'],
+     options: [{title: 'Source Code', url: 'https://www.capstone.perceptia.info/#code'}],
    },
    {
      title: 'Legal',
-     description: ['Privacy policy', 'Terms of use'],
+     options: [{title:'Privacy policy', url:''}, {title:'Terms of use',url:''}],
    },
  ];
 
@@ -43,9 +46,9 @@ const footers = [
             <Typography variant="h6" color="textPrimary" gutterBottom>
                {footer.title}
             </Typography>
-            {footer.description.map(item => (
-               <Typography key={item} variant="subtitle1" color="textSecondary">
-                  {item}
+            {footer.options.map(item => (
+               <Typography key={item.title} variant="subtitle1" color="textSecondary">
+                 <a href={item.url}>{item.title}</a>
                </Typography>
             ))}
             </Grid>
