@@ -1,8 +1,9 @@
 import React, {Fragment} from 'react';
 import {Switch, Route} from "react-router-dom";
-import {Footer, NavBar, QuestionView, QuizGallery} from "components";
-import ErrorBoundary from 'components/ErrorBoundary';
-import NotFound from 'components/NotFound';
+import { Container } from '@material-ui/core';
+import { Footer, NavBar, QuestionView, QuizGallery } from "components/";
+import ErrorBoundary from 'components/ErrorBoundary/';
+import NotFound from 'components/NotFound/';
 import Sign from 'scenes/Sign/';
 
 
@@ -23,12 +24,14 @@ export default class Main extends React.Component {
       <Fragment>
         <NavBar routes={routes.sign} history={this.props.history} />
         <ErrorBoundary context={"An unexpected error has occurred. Please reload the application."}>
-          <Switch>
-            <Route exact path={routes.root} component={QuizGallery}/>
-            <Route path={[routes.quizMode, routes.studyMode]} component={QuestionView}/>
-            <Route path={[routes.sign.signUp, routes.sign.signIn]} render={() => <Sign routes={routes.sign}/>}/>
-            <Route component={NotFound}/>
-          </Switch>
+          <Container maxWidth={'lg'}>
+            <Switch>
+              <Route exact path={routes.root} component={QuizGallery}/>
+              <Route path={[routes.quizMode, routes.studyMode]} component={QuestionView}/>
+              <Route path={[routes.sign.signUp, routes.sign.signIn]} render={() => <Sign routes={routes.sign}/>}/>
+              <Route component={NotFound}/>
+            </Switch>
+          </Container>
         </ErrorBoundary>
         <Footer/>
       </Fragment>
