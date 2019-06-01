@@ -5,10 +5,10 @@ import { Grid, Typography, withStyles } from '@material-ui/core';
 
 const styles = theme => ({
    footer: {
-     marginTop: theme.spacing.unit * 8,
+     marginTop: theme.spacing(8),
      borderTop: `1px solid ${theme.palette.divider}`,
-     padding: `${theme.spacing.unit * 6}px 0`,
-     textAlign: 'center'
+     padding: `${theme.spacing(6)}px 0`,
+     textAlign: 'center',
    },
  });
 
@@ -36,7 +36,7 @@ const footers = [
  
    return (
       <footer className={classNames(classes.footer, classes.layout)}>
-      <Grid container spacing={32} justify="space-evenly">
+      <Grid container spacing={1} justify="space-evenly">
          {footers.map(footer => (
             <Grid item xs key={footer.title}>
             <Typography variant="h6" color="textPrimary" gutterBottom>

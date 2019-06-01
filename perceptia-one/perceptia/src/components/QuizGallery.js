@@ -5,7 +5,7 @@ import constants from './constants';
 
 const styles = {
   cardGrid: {
-    padding: `px 8`, //Need adjustment
+    padding: `8px`, //Need adjustment
   },
   card: {
     height: '100%',
@@ -52,7 +52,7 @@ class QuizGallery extends React.Component {
   render() {
     return (
       <Fragment>
-        <Grid container spacing={40}>
+        <Grid container spacing={4}>
           {this.state.quizlist.map(name => (
             <Grid item key={name} sm={6} md={4} lg={3}>
               <QuizInfo quizName={name}/>
