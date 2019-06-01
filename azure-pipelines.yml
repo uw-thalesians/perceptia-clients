@@ -6,7 +6,7 @@ name: $(Build.BuildId)
 variables:
   - group: Common
   - group: Web
-  - group: WebDevelopment # Change for release to production
+  - group: WebProduction # Change for release to production
   # Client Variables
   - name: PerceptiaOneVersionMajor
     value: '0'
@@ -80,4 +80,4 @@ jobs:
       versionPatch: $(ImageVersionPatch)
       buildId: $(Build.BuildId)
       branch: $(Build.SourceBranchName)
-      tagProduction: or(eq(variables[ 'productionTags'], 'true'), startsWith(variables['Build.SourceBranch'], 'refs/heads/master/'))
+      tagProduction: eq(variables[ 'productionTags'], 'true')
