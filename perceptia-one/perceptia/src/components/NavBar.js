@@ -12,7 +12,11 @@ const styles = () => ({
     toolbarTitle: {
       flex: 1,
       textAlign: 'left',
+    },
+    toolbarText: {
       cursor: 'pointer',
+      display: 'inline-block'
+
     }
 });
 
@@ -39,8 +43,8 @@ function NavBar(props) {
       <ElevationScroll {...props}>
         <AppBar position="static" color="default" className={classes.appBar}>
           <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle} onClick={() => {props.history.push('/');}}>
-              Perceptia
+            <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+              <div className={classes.toolbarText} onClick={() => {props.history.push('/');}}>Perceptia</div>
             </Typography>
             <Button color="primary" variant="outlined" onClick={() => {props.history.push(props.routes.signIn);}}>
                Sign In
