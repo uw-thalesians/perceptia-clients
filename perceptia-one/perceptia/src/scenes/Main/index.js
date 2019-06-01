@@ -25,6 +25,7 @@ const styles = {
   },
   siteContainer: {
     display: 'flex',
+    minWidth: '100%',
     minHeight: '100vh',
     paddingLeft: '0',
     paddingRight: '0',
