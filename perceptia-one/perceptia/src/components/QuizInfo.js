@@ -25,7 +25,7 @@ class QuizInfo extends React.Component {
       quiz:null,
       summary:null,
       shortSummary:null,
-      imageurl:null
+      imageurl:'./img/placeholder.png'
     };
   }
 
