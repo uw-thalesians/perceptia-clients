@@ -85,8 +85,8 @@ class Question extends React.Component {
                 console.log("q_type 1");
                 return (<ul className="answerOptions">
                     {this.state.answerOptions.map(option => {
-                    return (<li className="answerOption">
-                        <div  key={""+this.state.question_id+option}>
+                    return (<li className="answerOption" key={""+this.state.question_id+option}>
+                        <div  >
                         <label className="radioCustomLabel">
                             {this.state.edit?<TextField defaultValue={option}/>:<input 
                                 value={option}
