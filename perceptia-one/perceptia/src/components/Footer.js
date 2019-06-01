@@ -9,6 +9,7 @@ const styles = theme => ({
      borderTop: `1px solid ${theme.palette.divider}`,
      padding: `${theme.spacing(6)}px 0`,
      textAlign: 'center',
+     maxWidth: '99%'
    },
  });
 
