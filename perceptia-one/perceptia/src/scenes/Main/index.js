@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import {Switch, Route} from "react-router-dom";
 import { Container, withStyles } from '@material-ui/core';
@@ -19,9 +19,17 @@ const routes = {
 
 };
 const styles = {
-  container: {
-    marginTop: '10px'
+  contentContainer: {
+    marginTop: '10px',
+    flex: 1
   },
+  siteContainer: {
+    display: 'flex',
+    minHeight: '100vh',
+    paddingLeft: '0',
+    paddingRight: '0',
+    flexDirection: 'column',
+  }
 };
 
 class Main extends React.Component {
@@ -29,10 +37,10 @@ class Main extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Fragment>
+      <Container className={classNames(classes.siteContainer)}>
         <NavBar routes={routes.sign} history={this.props.history} />
         <ErrorBoundary context={"An unexpected error has occurred. Please reload the application."}>
-          <Container maxWidth={'lg'} className={classNames(classes.container)}>
+          <Container maxWidth={'lg'} className={classNames(classes.contentContainer)}>
             <Switch>
               <Route exact path={routes.root} component={QuizGallery}/>
               <Route path={[routes.quizMode, routes.studyMode]} component={QuestionView}/>
@@ -42,7 +50,7 @@ class Main extends React.Component {
           </Container>
         </ErrorBoundary>
         <Footer/>
-      </Fragment>
+      </Container>
     );
   }
 }
