@@ -27,7 +27,7 @@ class QuizInfo extends React.Component {
       quiz:null,
       summary:null,
       shortSummary:null,
-      imageurl:'./img/placeholder.png'
+      imageurl:'./placeholder.png'
     };
   }
 
@@ -43,11 +43,15 @@ class QuizInfo extends React.Component {
       fetch(`${constants.api.url}/api/v1/anyquiz/read/` + this.state.quiz)
         .then(response => response.json())
         .then(response => {
+          let imageurl = './placeholder.png';
+          if (response.image !== undefined && response.image !== 'images/quiz.png') {
+            imageurl = response.image;
+          }
           if(this._ismounted){
             this.setState({
               summary: response.summary,
               shortSummary: response.summary.substring(0, 250) + "...",
-              imageurl: response.image
+              imageurl: imageurl
             });
           }
         });
