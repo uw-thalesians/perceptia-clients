@@ -1,24 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import QuizInfo from './QuizInfo';
-import Question from './Question';
+import {
+    LinearProgress, CircularProgress
+} from '@material-ui/core';
+
+import {Question, Results, Study} from './';
 import constants from './constants';
-import Results from './Results';
-import Study from './Study';
+
 import './quiz.css';
 
 
@@ -65,10 +52,7 @@ class QuestionView extends React.Component {
         fetch(`${constants.api.url}/api/v1/anyquiz/${mode_url}/${selectedQuiz}`)
             .then(response => response.json())
             .then(response => {
-                /*var list = []
-                for (var i = 0; i < response.questions.length; i++) {
-                    list.push(response.questions[i])
-                }*/
+                
                 console.log("processing api response", response);
 
                 var paragraphs = null;
@@ -94,11 +78,9 @@ class QuestionView extends React.Component {
 
             })
             .then(list => {
-                console.log("passing first question");
                 return list[this.state.counter];
             })
             .then(data => {
-                    console.log("initializing")
                     this.setState({
                     question: data.question,
                     answerOptions: data.answer,
@@ -110,14 +92,6 @@ class QuestionView extends React.Component {
 
     }
 
-    //setUserAnswer(answer) {
-    //    this.setState({})
-    //}
-    //
-    //setResults() {
-    //
-    //}
-    
     setNextQuestion() {
         const counter = this.state.counter + 1;
         
@@ -131,12 +105,10 @@ class QuestionView extends React.Component {
             busy: false,
         });
 
-    }
+    };
 
     handleAnswerSelected(answer) {
 
-        console.log(answer);
-        
         if(answer==null){
             this.setState({grades: this.state.grades.concat([false])});
             this.setNextQuestion();
@@ -171,23 +143,22 @@ class QuestionView extends React.Component {
     }
 
     handlePairedQuestions(event) {
-        //this.setUserAnswer(event.currentTarget.value);
+        
         if (this.state.paragraph_index < this.state.paragraphs.length - 1) {
             this.setState({
                 paragraph_index: this.state.paragraph_index+1,
             });
-            //setTimeout(() => this.(), 300);
+            
         } else {
-            //setTimeout(() => this.setResults(), 300);
+            
             this.setState({
                 completed:true
             });
         }
-    }
+    };
 
     renderLogic() {
 
-        console.log("rerendering");
         if (this.state.completed) {
 
             return (
@@ -198,7 +169,7 @@ class QuestionView extends React.Component {
 
             if(this.state.mode==="study" && this.state.paragraph_index <= this.state.counter){
                 
-                var psummary = this.state.paragraphs.filter((p)=> p.id == this.state.paragraph_id);
+                var psummary = this.state.paragraphs.filter((p)=> p.id === this.state.paragraph_id);
 
                 return <Study 
                     quiz={this.props.location.state.selectedQuiz}
@@ -222,16 +193,15 @@ class QuestionView extends React.Component {
             );
 
         }
-    }
+    };
 
     render() {
 //<!-- className="App-header">-->
-//console.log(this);
         if (this.state.question != null) {
             return(
-                <div>
+                <div className={"Center-Align"}>
                     <div>
-                        <h2>{this.props.location.state.selectedQuiz} {this.state.mode=="quiz"?"quiz":"study"}</h2>
+                        <h2>{this.props.location.state.selectedQuiz} {this.state.mode==="quiz"?"quiz":"study"}</h2>
 
                         <div className="progress">
                             <LinearProgress variant="determinate" value={this.state.counter*100/this.state.questions.length}/>
@@ -243,7 +213,7 @@ class QuestionView extends React.Component {
         }
 
         return (
-            <div>
+            <div className={"Center-Align"}>
                 <CircularProgress/>
             </div>
         );

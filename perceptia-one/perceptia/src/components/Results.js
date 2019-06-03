@@ -1,13 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { CSSTransitionGroup } from 'react-transition-group';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {
+  Table, TableBody, TableCell, TableHead, TableRow, Paper
+} from '@material-ui/core';
 import {CheckCircle, NotInterested} from '@material-ui/icons';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -43,7 +37,7 @@ class Results extends React.Component{
             <TableRow key={"result_"+index}>
               <TableCell>{this.props.grades[index]?<CheckCircle style={{"color": "green"}}/>:<NotInterested style={{"color": "red"}}/>}</TableCell>
               <TableCell>{question.question}</TableCell>
-            </TableRow>)
+            </TableRow>);
             })}
           </TableBody>
           </Table>

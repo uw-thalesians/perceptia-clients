@@ -1,26 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import QuizInfo from './QuizInfo';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import {
+    Button, TextField, CircularProgress
+} from '@material-ui/core';
 import { DeleteForever, Edit, SaveOutlined, NotInterested, NavigateNext } from "@material-ui/icons";
 import "./quiz.css";
 import constants from "./constants";
-import CircularProgress from '@material-ui/core/CircularProgress';
+
+const questionTypeMultipleChoice = 1;
+const questionTypeTrueFalse = 2;
 
 class Question extends React.Component {
-
     constructor(props) {
         super(props);
         console.log(props);
@@ -36,19 +26,6 @@ class Question extends React.Component {
         };
     }
 
-    /*static getDerivedStateFromProps(nextProps) {
-        console.log(nextProps)
-        return {
-            question:nextProps.question,
-            
-            question_type:+nextProps.question_type,
-            questionId:nextProps.questionId,
-            answerOptions:nextProps.answerOptions,
-            
-            busy: false,
-        };
-    }*/
-
     deleteQuestion(){
         var body = JSON.stringify({
             "questionID":`${this.state.questionId}`,
@@ -59,9 +36,8 @@ class Question extends React.Component {
             method: 'post',
             body: body,
         })
-        .then( response => {console.log(response); return response.json(); })
+        .then( response => response.json() )
         .then( response =>{
-            console.log(response);
             this.setState({"busy": false});
             window.alert(response["result"]["status"]);
             this.props.onAnswerSelected(null);
@@ -92,21 +68,18 @@ class Question extends React.Component {
             var options = this.state.answerOptions;
             var i = options.indexOf(result["prevAnswer"]);
             options[i] = result["newAnswer"];
-            //window.alert(response.msg);
             this.setState({"answerOptions": options, "question": this.state.newText});
         });
     }
 
     renderOptions(){
-        //console.log(this.state);
 
         switch(this.state.question_type) {
-            case 1:
-
+            case questionTypeMultipleChoice:
                 return (<ul className="answerOptions">
                     {this.state.answerOptions.map(option => {
-                    return (<li className="answerOption">
-                        <div  key={""+this.state.question_id+option}>
+                    return (<li className="answerOption" key={""+this.state.question_id+option}>
+                        <div  >
                         <label className="radioCustomLabel">
                             {this.state.edit?<TextField onKeyUp={(event)=>{ 
                                 var newAnswer = event.target.value;
@@ -131,7 +104,7 @@ class Question extends React.Component {
                         </li>);})}</ul>
                 );
 
-            case 2:
+            case questionTypeTrueFalse:
                 return (<ul className="answerOptions">
     
                 <li className="answerOption">
@@ -185,9 +158,7 @@ class Question extends React.Component {
 
             }
             var optionsNodes = this.renderOptions();
-            //console.log(optionsNodes);
             return (
-                // <MultipleChoice />
                 <div>
                     {this.state.edit?<TextField
         id="standard-multiline-flexible"
@@ -198,7 +169,8 @@ class Question extends React.Component {
         //value={values.multiline}
         onKeyUp={(event)=>{
             var newText = event.target.value;
-            this.setState({"newText": newText}); console.log(newText);console.log(this.state);}}
+            this.setState({"newText": newText});
+        }}
         defaultValue={(this.state.question)}
       />:<h2 className="question">{(this.state.question)}</h2>}
                         <div id="editControls">
