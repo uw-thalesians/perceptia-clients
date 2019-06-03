@@ -1,26 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import QuizInfo from './QuizInfo';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import {
+    Button, TextField, CircularProgress
+} from '@material-ui/core';
 import { DeleteForever, Edit, SaveOutlined, NotInterested, NavigateNext } from "@material-ui/icons";
-import "./quiz.css"
+
+import "./quiz.css";
 import constants from "./constants";
-import CircularProgress from '@material-ui/core/CircularProgress';
+
+
+let questionTypeMultipleChoice = 1;
+let questionTypeTrueFalse = 2;
 
 class Question extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -32,8 +24,10 @@ class Question extends React.Component {
             newText:"",
             newAnswer:"",
             busy: false,
-        }
+        };
     }
+
+
 
     static getDerivedStateFromProps(nextProps) {
         return {
@@ -44,7 +38,7 @@ class Question extends React.Component {
             answerOptions:nextProps.answerOptions,
             newAnswer:"",
             busy: false,
-        }
+        };
     }
 
     deleteQuestion(){
@@ -87,12 +81,12 @@ class Question extends React.Component {
         console.log(this.state);
 
         switch(this.state.question_type) {
-            case 1:
-                console.log("q_type 1")
+            case questionTypeMultipleChoice:
+                console.log("q_type 1");
                 return (<ul className="answerOptions">
                     {this.state.answerOptions.map(option => {
-                    return (<li className="answerOption">
-                        <div  key={""+this.state.question_id+option}>
+                    return (<li className="answerOption" key={""+this.state.question_id+option}>
+                        <div  >
                         <label className="radioCustomLabel">
                             {this.state.edit?<TextField defaultValue={option}/>:<input 
                                 value={option}
@@ -112,8 +106,8 @@ class Question extends React.Component {
                         </li>);})}</ul>
                 );
 
-            case 2:
-                console.log("q type 2")
+            case questionTypeTrueFalse:
+                console.log("q type 2");
                 return (<ul className="answerOptions">
     
                 <li className="answerOption">
@@ -177,8 +171,8 @@ class Question extends React.Component {
         defaultValue={this.state.question}
       />:<h2 className="question">{this.state.question}</h2>}
                         <div id="editControls">
-                            <Edit onClick={()=>{ if(!this.state.edit) this.setState({"edit": true})} }/>
-                            <NotInterested onClick={()=>{ if(this.state.edit) this.setState({"edit":false})} } style={{"color":this.state.edit?"black":"grey"}}/>
+                            <Edit onClick={()=>{ if(!this.state.edit) this.setState({"edit": true});} }/>
+                            <NotInterested onClick={()=>{ if(this.state.edit) this.setState({"edit":false});} } style={{"color":this.state.edit?"black":"grey"}}/>
                             <SaveOutlined onClick={()=>{
                                 if(this.state.edit) {
                                     this.sendQuestionEdit(); 
@@ -195,7 +189,7 @@ class Question extends React.Component {
                         </div>
                         {this.state.busy?<CircularProgress/>:optionsNodes}
                 </div>
-            )
+            );
     }
 
 }
