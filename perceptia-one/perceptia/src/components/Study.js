@@ -1,11 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { CSSTransitionGroup } from 'react-transition-group';
-import './quiz.css'
+
+import './quiz.css';
 import { NavigateNext } from "@material-ui/icons";
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import {Button, CircularProgress} from '@material-ui/core';
+
 
 class Study extends React.Component {
 
@@ -24,13 +22,13 @@ class Study extends React.Component {
 
         return (
             <div>
-                <p>{this.props.summary[0].text}</p>
+                <h2 className="question">{(this.props.summary[0].text)}</h2>
                 <Button onClick={this.props.onNext}>Next <NavigateNext/></Button>
             </div>
 
-        )
+        );
 
-    }
+  }
 }
 
 export default Study;

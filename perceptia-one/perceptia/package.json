@@ -16,23 +16,28 @@
     }
   ],
   "dependencies": {
-    "@material-ui/core": "^3.9.3",
+    "@material-ui/core": "^4.0.0",
     "@material-ui/icons": "^3.0.2",
-    "bootstrap": "^4.3.1",
     "mdbreact": "^4.15.0",
+    "axios": "^0.18.0",
+    "classnames": "^2.2.6",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.1",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
+    "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "^3.0.1"
+    "react-scripts": "^3.0.1",
+    "redux": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -73,8 +78,11 @@
     "url": "https://github.com/uw-thalesians/perceptia-clients"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.13.0",
+    "redux-devtools": "^3.5.0",
+    "redux-devtools-extension": "^2.13.8",
     "typescript": "^3.4.5"
   }
 }

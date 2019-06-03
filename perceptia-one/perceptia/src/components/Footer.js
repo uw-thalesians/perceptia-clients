@@ -1,34 +1,37 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import { Grid, Typography, withStyles } from '@material-ui/core';
 
 const styles = theme => ({
    footer: {
-     marginTop: theme.spacing.unit * 8,
+     marginTop: theme.spacing(8),
      borderTop: `1px solid ${theme.palette.divider}`,
-     padding: `${theme.spacing.unit * 6}px 0`,
+     padding: `${theme.spacing(6)}px 0`,
+     textAlign: 'center',
+     maxWidth: '99%'
    },
  });
 
 const footers = [
    {
      title: 'About',
-     description: ['Team', 'Contact us'],
+     options: [{
+       title: 'Team',
+       url: 'https://www.capstone.perceptia.info/#team'
+     }, {title: 'Contact Us', url: 'mailto:uw-thalesians@u.washington.edu'}],
    },
    {
      title: 'Explore',
-     description: ['AnyQuiz', 'Summary', 'Knowledge Graph'],
+     options: [{title: 'AnyQuiz', url: 'http://students.washington.edu/long27km/any_quiz/'}],
    },
    {
      title: 'Resources',
-     description: ['Documentation', 'Related Research', 'FAQ'],
+     options: [{title: 'Source Code', url: 'https://www.capstone.perceptia.info/#code'}],
    },
    {
      title: 'Legal',
-     description: ['Privacy policy', 'Terms of use'],
+     options: [{title:'Privacy policy', url:''}, {title:'Terms of use',url:''}],
    },
  ];
 
@@ -37,15 +40,15 @@ const footers = [
  
    return (
       <footer className={classNames(classes.footer, classes.layout)}>
-      <Grid container spacing={32} justify="space-evenly">
+      <Grid container spacing={1} justify="space-evenly">
          {footers.map(footer => (
             <Grid item xs key={footer.title}>
             <Typography variant="h6" color="textPrimary" gutterBottom>
                {footer.title}
             </Typography>
-            {footer.description.map(item => (
-               <Typography key={item} variant="subtitle1" color="textSecondary">
-                  {item}
+            {footer.options.map(item => (
+               <Typography key={item.title} variant="subtitle1" color="textSecondary">
+                 <a href={item.url}>{item.title}</a>
                </Typography>
             ))}
             </Grid>

@@ -1,34 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import QuizInfo from './QuizInfo';
-import QuestionView from './QuestionView';
-import NavBar from './NavBar';
-import Footer from './Footer';
+import React, {Fragment} from 'react';
+import {Grid, withStyles, CircularProgress} from '@material-ui/core';
+import {QuizInfo} from './';
 import constants from './constants';
 import SearchBar from './SearchBar';
 import SnackBar from './SnackBar';
 
 const styles = {
-    cardGrid: {
-        padding: `px 8`, //Need adjustment 
-    },
-    card: {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column'
-    }
+  cardGrid: {
+    padding: `8px`, //Need adjustment
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center',
+  }
 };
 
 class QuizGallery extends React.Component {
@@ -36,12 +22,13 @@ class QuizGallery extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: true,
             quizlist: [],
-            currentquiz: [],
+            currentQuiz: [],
             fetchInProgress:false,
             fetchStatus: "Starting...",
             errorMessage: ""
-        }
+        };
     }
 
     componentDidMount() {
@@ -53,13 +40,13 @@ class QuizGallery extends React.Component {
                     list.push(response.quizzes[i].keyword);
                 }
 
-                return list
-
+                return list;
             })
             .then(list => this.setState({
                 quizlist: list,
-                currentquiz: list
-            }))
+                currentQuiz: list,
+                loading: false,
+            }));
     }
 
     fetchStatus(InProgress, quiz) {
@@ -68,79 +55,78 @@ class QuizGallery extends React.Component {
                 .then(response => response.json())
                 .then(response => this.setState({
                     fetchStatus: response.status_string
-                }))
+                }));
         }
 
+    }
+
+    handleFilterQuiz(quiz)
+    {
+      if (quiz === "") {
+          this.setState({
+              currentQuiz: this.state.quizlist
+          });
+      } else {
+        var temp = this.state.quizlist.filter((curQuiz) => curQuiz.includes(quiz));
+
+        this.setState({
+            currentQuiz: temp
+        });
+      }
     }
 
     handleSearchQuiz(quiz) {
      
-        if (quiz == "") {
-            this.setState({
-                currentquiz: this.state.quizlist
-            })
-        } else if (this.state.quizlist.includes(quiz)) {
-            var temp = [quiz]
-            this.setState({
-                currentquiz: temp
-            })
-        } else {
-            this.setState({
-                fetchInProgress: true
-            })
+      console.log("creating", quiz);
+      this.setState({
+          fetchInProgress: true
+      });
 
-            fetch(`${constants.api.url}/api/v1/anyquiz/read/` + quiz)
-                .then(response => {
-                    if (!response.ok) {
-                        throw Error(response.statusText)
-                    }
-                    return response
-                })
-                .then(response => {
-                    var temp = [quiz]
-                    this.setState(prevState => ({
-                        fetchInProgress: false, 
-                        quizlist: [...prevState.quizlist, quiz],
-                        currentquiz: temp
-                    }))
-                
-                })
-                .catch(error => this.setState({
-                    fetchInProgress: false,
-                    errorMessage: error
-                }))
+      fetch(`${constants.api.url}/api/v1/anyquiz/read/` + quiz)
+          .then(response => {
+              if (!response.ok) {
+                  throw Error(response.statusText);
+              }
+              return response;
+          })
+          .then(response => {
+              var temp = [quiz];
+              this.setState(prevState => ({
+                  fetchInProgress: false, 
+                  quizlist: [...prevState.quizlist, quiz],
+                  currentQuiz: temp
+              }));
+          
+          })
+          .catch(error => this.setState({
+              fetchInProgress: false,
+              errorMessage: error
+          }));
 
-            this.interval = setInterval(() => {
-                this.fetchStatus(this.state.fetchInProgress, quiz)
-            }, 5000)
-        }
+      this.interval = setInterval(() => {
+          this.fetchStatus(this.state.fetchInProgress, quiz);
+      }, 5000);
 
     }
 
     render() {
-        const { classes } = this.props;
+
+        //const { classes } = this.props;
         
-        return (
-            <div>
-                <NavBar/>
-
-                <SearchBar onSearchQuiz={this.handleSearchQuiz.bind(this)}/>
-                {
-                    this.state.fetchInProgress ?
-                        <SnackBar text={this.state.fetchStatus} /> : 
-                    <Grid container spacing={40}>
-                    {this.state.currentquiz.map(name => (
-                    <Grid item key={name} sm={6} md={4} lg={3}>
-                        <QuizInfo quizName={name}/>
-                    </Grid>
-                    ))}
-                    </Grid>
-                }
-
-                <Footer/>
-            </div>
-        )
-    }
+        return <Fragment>
+          <SearchBar onSearchQuiz={this.handleSearchQuiz.bind(this)} onFilterQuiz={this.handleFilterQuiz.bind(this)}/>
+                  {
+                      this.state.fetchInProgress &&
+                          <SnackBar text={this.state.fetchStatus} />
+                  }
+          <Grid container spacing={4}>
+            {!this.state.loading ? this.state.currentQuiz.map(name => (
+              <Grid item key={name} sm={6} md={4} lg={3}>
+                <QuizInfo quizName={name}/>
+              </Grid>
+            )):<div className={"Center-Align"}><CircularProgress/></div>}
+          </Grid>
+        </Fragment>;}
 
 }
 
