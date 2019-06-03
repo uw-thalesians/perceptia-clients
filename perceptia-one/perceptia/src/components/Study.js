@@ -22,11 +22,11 @@ class Study extends React.Component {
 
         return (
             <div>
-                <p>{this.props.summary[0].text}</p>
+                <h2 className="question">{(this.props.summary[0].text)}</h2>
                 <Button onClick={this.props.onNext}>Next <NavigateNext/></Button>
             </div>
 
-    );
+        );
 
   }
 }
