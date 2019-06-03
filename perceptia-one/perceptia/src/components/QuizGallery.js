@@ -26,6 +26,7 @@ class QuizGallery extends React.Component {
             quizlist: [],
             currentQuiz: [],
             fetchInProgress:false,
+            closeFetchSnackBar:false,
             fetchStatus: "Starting...",
             errorMessage: ""
         };
@@ -79,7 +80,8 @@ class QuizGallery extends React.Component {
      
       console.log("creating", quiz);
       this.setState({
-          fetchInProgress: true
+          fetchInProgress: true,
+          closeFetchSnackBar:false,
       });
 
       fetch(`${constants.api.url}/api/v1/anyquiz/read/` + quiz)
@@ -109,6 +111,10 @@ class QuizGallery extends React.Component {
 
     }
 
+    handleCloseFetchSnackBar() {
+      this.setState({closeFetchSnackBar:true});
+    }
+
     render() {
 
         //const { classes } = this.props;
@@ -116,8 +122,8 @@ class QuizGallery extends React.Component {
         return <Fragment>
           <SearchBar onSearchQuiz={this.handleSearchQuiz.bind(this)} onFilterQuiz={this.handleFilterQuiz.bind(this)}/>
                   {
-                      this.state.fetchInProgress &&
-                          <SnackBar text={this.state.fetchStatus} />
+                      this.state.fetchInProgress && !this.state.closeFetchSnackBar &&
+                          <SnackBar text={this.state.fetchStatus} onClickClose={this.handleCloseFetchSnackBar.bind(this)} />
                   }
           <Grid container spacing={4}>
             {!this.state.loading ? this.state.currentQuiz.map(name => (
