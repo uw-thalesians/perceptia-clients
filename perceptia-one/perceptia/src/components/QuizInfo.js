@@ -61,21 +61,6 @@ class QuizInfo extends React.Component {
     this._ismounted=false;
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (this.state.quiz != prevState.quiz) {
-  //     fetch('http://students.washington.edu/long27km/any_quiz/v1/read/' + this.state.quiz)
-  //       .then(response => response.json())
-  //       .then(response => this.setState({
-  //         summary: response.summary,
-  //         shortSummary: response.summary.substring(0, 250) + "..."
-  //       }))
-  //   }
-  // }
-
-  // handleButtonClicked = event => {
-    
-  // }
-
   render() {
     const { classes } = this.props;
 
