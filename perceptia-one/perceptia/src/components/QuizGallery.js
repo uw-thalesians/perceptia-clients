@@ -26,8 +26,10 @@ class QuizGallery extends React.Component {
             quizlist: [],
             currentQuiz: [],
             fetchInProgress:false,
-            closeFetchSnackBar:false,
+            // closeFetchSnackBar:false,
             fetchStatus: "Starting...",
+            fetchStep: 0,
+            fetchTotalStep: 5,
             errorMessage: ""
         };
     }
@@ -55,7 +57,8 @@ class QuizGallery extends React.Component {
             fetch(`${constants.api.url}/api/v1/anyquiz/status/` + quiz)
                 .then(response => response.json())
                 .then(response => this.setState({
-                    fetchStatus: response.status_string
+                    fetchStatus: response.status_string,
+                    fetchStep: parseInt(response.progress) + 1,
                 }));
         }
 
@@ -79,10 +82,11 @@ class QuizGallery extends React.Component {
     handleSearchQuiz(quiz) {
      
       console.log("creating", quiz);
-      this.setState({
+      this.setState(prevState => ({
           fetchInProgress: true,
-          closeFetchSnackBar:false,
-      });
+          currentQuiz: [...prevState.quizlist], // Display other quizs while adding new ones
+          // closeFetchSnackBar:false,
+      }));
 
       fetch(`${constants.api.url}/api/v1/anyquiz/read/` + quiz)
           .then(response => {
@@ -92,16 +96,29 @@ class QuizGallery extends React.Component {
               return response;
           })
           .then(response => {
-              var temp = [quiz];
+              // This implementation logic restricts the access to other quizs
+              // while searching
+
+              // var temp = [quiz];
+              // this.setState(prevState => ({
+              //     fetchInProgress: false, 
+              //     quizlist: [...prevState.quizlist, quiz],
+              //     currentQuiz: temp
+              // }));
+
               this.setState(prevState => ({
-                  fetchInProgress: false, 
+                  fetchInProgress: false,
+                  fetchStatus: "Starting...",
+                  fetchStep: 0,
                   quizlist: [...prevState.quizlist, quiz],
-                  currentQuiz: temp
+                  currentQuiz: [...prevState.quizlist, quiz]
               }));
           
           })
           .catch(error => this.setState({
               fetchInProgress: false,
+              fetchStatus: "Starting...",
+              fetchStep: 0,
               errorMessage: error
           }));
 
@@ -111,9 +128,9 @@ class QuizGallery extends React.Component {
 
     }
 
-    handleCloseFetchSnackBar() {
-      this.setState({closeFetchSnackBar:true});
-    }
+    // handleCloseFetchSnackBar() {
+    //   this.setState({closeFetchSnackBar:true});
+    // }
 
     render() {
 
@@ -122,8 +139,14 @@ class QuizGallery extends React.Component {
         return <Fragment>
           <SearchBar onSearchQuiz={this.handleSearchQuiz.bind(this)} onFilterQuiz={this.handleFilterQuiz.bind(this)}/>
                   {
-                      this.state.fetchInProgress && !this.state.closeFetchSnackBar &&
-                          <SnackBar text={this.state.fetchStatus} onClickClose={this.handleCloseFetchSnackBar.bind(this)} />
+                      // this.state.fetchInProgress && !this.state.closeFetchSnackBar &&
+                      this.state.fetchInProgress &&
+                          <SnackBar 
+                              variant="success"
+                              status={this.state.fetchStatus} 
+                              fetchStep={this.state.fetchStep}
+                              fetchTotalStep={this.state.fetchTotalStep} />
+                              // onClickClose={this.handleCloseFetchSnackBar.bind(this)} />
                   }
           <Grid container spacing={4}>
             {!this.state.loading ? this.state.currentQuiz.map(name => (
