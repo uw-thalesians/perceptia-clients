@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Button, Card, CardActions, CardContent, CardMedia, Typography, withStyles
+  Button, Card, CardActions, CardContent, CardMedia, Grid, Typography, withStyles
 } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import constants from './constants';
@@ -10,10 +10,17 @@ const styles = {
     maxWidth: 345,
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
+  cardContent: {
     textAlign: 'center',
+
+  },
+  cardActions: {
+    justifyContent: 'space-between',
   },
   media: {
-    height: 140,
+    height: 150,
   },
 };
 
@@ -65,13 +72,13 @@ class QuizInfo extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Card className={classes.card}>
+      <Grid item xs component={Card} className={classes.card}>
         <CardMedia
           className={classes.media}
           image={this.state.imageurl}
           title={this.state.quiz}
         />
-        <CardContent>
+        <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
             {this.state.quiz}
           </Typography>
@@ -79,7 +86,7 @@ class QuizInfo extends React.Component {
             {this.state.shortSummary}
           </Typography>
         </CardContent>
-        <CardActions>
+        <CardActions className={classes.cardActions}>
           <Link to={{
             pathname: './study',
             state: {
@@ -109,7 +116,7 @@ class QuizInfo extends React.Component {
             </Button>
           </Link>
         </CardActions>
-      </Card>
+      </Grid>
     );
   }
 }
