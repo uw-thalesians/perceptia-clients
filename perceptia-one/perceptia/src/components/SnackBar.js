@@ -1,18 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Button from '@material-ui/core/Button';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
-import green from '@material-ui/core/colors/green';
-import amber from '@material-ui/core/colors/amber';
-import IconButton from '@material-ui/core/IconButton';
-import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContent from '@material-ui/core/SnackbarContent';
-import WarningIcon from '@material-ui/icons/Warning';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  CheckCircle as CheckCircleIcon, Close as CloseIcon, Error as ErrorIcon, Info as InfoIcon, Warning as WarningIcon
+} from '@material-ui/icons';
+import { green, amber } from '@material-ui/core/colors';
+import { IconButton, makeStyles, Snackbar, SnackbarContent } from '@material-ui/core';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -81,19 +74,8 @@ MySnackbarContentWrapper.propTypes = {
   fetchTotalStep: PropTypes.number,
 };
 
-const useStyles2 = makeStyles(theme => ({
-  margin: {
-    margin: theme.spacing(1),
-  },
-}));
-
 function SnackBar(props) {
-  const classes = useStyles2();
   const [open, setOpen] = React.useState(true);
-
-//   function handleClick() {
-//     setOpen(true);
-//   }
 
   function handleClose(event, reason) {
     if (reason === 'clickaway') {
@@ -104,9 +86,7 @@ function SnackBar(props) {
   }
 
   return (
-    
     <div>
-
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',
