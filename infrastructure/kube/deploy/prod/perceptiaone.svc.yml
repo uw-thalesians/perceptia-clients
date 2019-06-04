@@ -1,0 +1,29 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: perceptiaone
+  labels:
+    label.perceptia.info/name: perceptiaone
+    label.perceptia.info/instance: perceptiaone-1
+    label.perceptia.info/version: "0.0.1"
+    label.perceptia.info/managed-by: kubectl
+    label.perceptia.info/component: server
+    label.perceptia.info/type: frontend
+    label.perceptia.info/release: '0.2.0'
+    label.perceptia.info/part-of: perceptia-web
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-resource-group: perceptiaWeb
+spec:
+  selector:
+    app: perceptiaone
+  ports:
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: https
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: http
+  loadBalancerIP: 52.247.193.169
+  type: LoadBalancer
