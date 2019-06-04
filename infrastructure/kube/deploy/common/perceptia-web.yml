@@ -9,6 +9,7 @@ metadata:
     label.perceptia.info/managed-by: kubectl
     label.perceptia.info/component: server
     label.perceptia.info/type: frontend
+    label.perceptia.info/release: '0.3.1'
     label.perceptia.info/part-of: perceptia-web
 spec:
   replicas: 1
@@ -25,11 +26,12 @@ spec:
         label.perceptia.info/managed-by: kubectl
         label.perceptia.info/component: server
         label.perceptia.info/type: frontend
+        label.perceptia.info/release: '0.3.1'
         label.perceptia.info/part-of: perceptia-web
     spec:
       containers:
       - name: perceptiaone
-        image: uwthalesians/perceptiaone:0.2.0-build-471-branch-develop
+        image: uwthalesians/perceptiaone:0.2.0-build-449-branch-master
         ports:
         - name: https
           containerPort: 443
