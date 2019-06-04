@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-    AppBar, Button, Toolbar, Typography,withStyles
+    AppBar, Toolbar, Typography, withStyles
 } from '@material-ui/core';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 
@@ -46,12 +46,12 @@ function NavBar(props) {
             <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
               <div className={classes.toolbarText} onClick={() => {props.history.push('/');}}>Perceptia</div>
             </Typography>
-            <Button color="primary" variant="outlined" onClick={() => {props.history.push(props.routes.signIn);}}>
+            {/*<Button color="primary" variant="outlined" onClick={() => {props.history.push(props.routes.signIn);}}>
                Sign In
             </Button>
             <Button color="primary" variant="outlined" onClick={() => {props.history.push(props.routes.signUp);}}>
                 Sign Up
-            </Button>
+            </Button>*/}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
