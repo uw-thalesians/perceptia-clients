@@ -5,7 +5,7 @@ metadata:
   labels:
     label.perceptia.info/name: perceptiaone
     label.perceptia.info/instance: perceptiaone-1
-    label.perceptia.info/version: "0.0.1"
+    label.perceptia.info/version: "0.2.0"
     label.perceptia.info/managed-by: kubectl
     label.perceptia.info/component: server
     label.perceptia.info/type: frontend
