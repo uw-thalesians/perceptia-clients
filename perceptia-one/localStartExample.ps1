@@ -1,11 +1,11 @@
 Param (
     [switch]$Latest,
-    [string]$Build = "309",
+    [string]$Build = "443",
     [string]$Branch = "develop",
     [switch]$CurrentBranch,
 
     [switch]$BuildPOne,
-    [string]$POneVersion = "0.1.1",
+    [string]$POneVersion = "0.2.0",
     [String]$POnePortPublish = "4444",
 
     [String]$ApiServerHost = "localhost",

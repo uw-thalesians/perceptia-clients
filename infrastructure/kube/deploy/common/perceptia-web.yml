@@ -5,7 +5,7 @@ metadata:
   labels:
     label.perceptia.info/name: perceptiaone
     label.perceptia.info/instance: perceptiaone-1
-    label.perceptia.info/version: "0.1.1"
+    label.perceptia.info/version: "0.2.0"
     label.perceptia.info/managed-by: kubectl
     label.perceptia.info/component: server
     label.perceptia.info/type: frontend
@@ -21,7 +21,7 @@ spec:
         app: perceptiaone
         label.perceptia.info/name: perceptiaone
         label.perceptia.info/instance: perceptiaone-1
-        label.perceptia.info/version: "0.1.1"
+        label.perceptia.info/version: "0.2.0"
         label.perceptia.info/managed-by: kubectl
         label.perceptia.info/component: server
         label.perceptia.info/type: frontend
@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: perceptiaone
-        image: uwthalesians/perceptiaone:0.1.1-build-358-branch-develop
+        image: uwthalesians/perceptiaone:0.2.0-build-443-branch-develop
         ports:
         - name: https
           containerPort: 443
