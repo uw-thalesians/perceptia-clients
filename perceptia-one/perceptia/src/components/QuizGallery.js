@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
-import {Grid, CircularProgress} from '@material-ui/core';
-import {SearchBar, SnackBar, QuizInfo} from './';
+import {Grid, CircularProgress } from '@material-ui/core';
+
+import { QuizInfo, SearchBar, SnackBar } from './';
 import constants from './constants';
 
 class QuizGallery extends React.Component {
@@ -12,8 +13,9 @@ class QuizGallery extends React.Component {
       quizlist: [],
       currentQuiz: [],
       fetchInProgress:false,
-      closeFetchSnackBar:false,
       fetchStatus: "Starting...",
+      fetchStep: 0,
+      fetchTotalStep: 5,
       errorMessage: ""
     };
   }
@@ -23,7 +25,7 @@ class QuizGallery extends React.Component {
       .then(response => response.json())
       .then(response => {
         let list = [];
-        for (var i = 0; i < response.quizzes.length; i++) {
+        for (let i = 0; i < response.quizzes.length; i++) {
           list.push(response.quizzes[i].keyword);
         }
 
@@ -41,7 +43,8 @@ class QuizGallery extends React.Component {
       fetch(`${constants.api.url}/api/v1/anyquiz/status/` + quiz)
         .then(response => response.json())
         .then(response => this.setState({
-          fetchStatus: response.status_string
+          fetchStatus: response.status_string,
+          fetchStep: parseInt(response.progress) + 1,
         }));
     }
 
@@ -63,10 +66,10 @@ class QuizGallery extends React.Component {
   }
 
   handleSearchQuiz(quiz) {
-    this.setState({
+    this.setState(prevState => ({
       fetchInProgress: true,
-      closeFetchSnackBar:false,
-    });
+      currentQuiz: [...prevState.quizlist],
+    }));
 
     fetch(`${constants.api.url}/api/v1/anyquiz/read/` + quiz)
       .then(response => {
@@ -76,16 +79,19 @@ class QuizGallery extends React.Component {
         return response;
       })
       .then(response => {
-        var temp = [quiz];
         this.setState(prevState => ({
           fetchInProgress: false,
+          fetchStatus: "Complete...",
+          fetchStep: 0,
           quizlist: [...prevState.quizlist, quiz],
-          currentQuiz: temp
+          currentQuiz: [...prevState.quizlist, quiz]
         }));
 
       })
       .catch(error => this.setState({
         fetchInProgress: false,
+        fetchStatus: "Error...",
+        fetchStep: 0,
         errorMessage: error
       }));
 
@@ -95,21 +101,21 @@ class QuizGallery extends React.Component {
 
   }
 
-  handleCloseFetchSnackBar() {
-    this.setState({closeFetchSnackBar:true});
-  }
-
   render() {
 
     return <Fragment>
       <SearchBar onSearchQuiz={this.handleSearchQuiz.bind(this)} onFilterQuiz={this.handleFilterQuiz.bind(this)}/>
       {
-        this.state.fetchInProgress && !this.state.closeFetchSnackBar &&
-        <SnackBar text={this.state.fetchStatus} onClickClose={this.handleCloseFetchSnackBar.bind(this)} />
+        this.state.fetchInProgress &&
+        <SnackBar
+          variant="success"
+          status={this.state.fetchStatus}
+          fetchStep={this.state.fetchStep}
+          fetchTotalStep={this.state.fetchTotalStep} />
       }
       <Grid container spacing={4}>
         {!this.state.loading ? this.state.currentQuiz.map(name => (
-          <Grid item key={name} sm={6} md={4} lg={3}>
+          <Grid container item key={name} sm={6} md={4} lg={3}>
             <QuizInfo quizName={name}/>
           </Grid>
         )):<div className={"Center-Align"}><CircularProgress/></div>}
