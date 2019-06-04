@@ -154,7 +154,7 @@ class Question extends React.Component {
     render() {
 
             if(this.state.question == null){
-                return (<div><CircularProgress/></div>);
+                return (<div className={"Center-Align"}><CircularProgress/></div>);
 
             }
             var optionsNodes = this.renderOptions();

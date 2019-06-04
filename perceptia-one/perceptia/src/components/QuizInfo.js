@@ -21,11 +21,13 @@ class QuizInfo extends React.Component {
 
   constructor(props) {
     super(props);
+    //https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
+    this._ismounted=false;
     this.state = {
       quiz:null,
       summary:null,
       shortSummary:null,
-      imageurl:'./img/placeholder.png'
+      imageurl:'./placeholder.png'
     };
   }
 
@@ -36,29 +38,28 @@ class QuizInfo extends React.Component {
   }
 
   componentDidMount() {
+    this._ismounted = true;
+
       fetch(`${constants.api.url}/api/v1/anyquiz/read/` + this.state.quiz)
         .then(response => response.json())
-        .then(response => this.setState({
-          summary: response.summary,
-          shortSummary: response.summary.substring(0, 250) + "...",
-          imageurl: response.image
-        }));
+        .then(response => {
+          let imageurl = './placeholder.png';
+          if (response.image !== undefined && response.image !== 'images/quiz.png') {
+            imageurl = response.image;
+          }
+          if(this._ismounted){
+            this.setState({
+              summary: response.summary,
+              shortSummary: response.summary.substring(0, 250) + "...",
+              imageurl: imageurl
+            });
+          }
+        });
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (this.state.quiz != prevState.quiz) {
-  //     fetch('http://students.washington.edu/long27km/any_quiz/v1/read/' + this.state.quiz)
-  //       .then(response => response.json())
-  //       .then(response => this.setState({
-  //         summary: response.summary,
-  //         shortSummary: response.summary.substring(0, 250) + "..."
-  //       }))
-  //   }
-  // }
-
-  // handleButtonClicked = event => {
-    
-  // }
+  componentWillUnmount(){
+    this._ismounted=false;
+  }
 
   render() {
     const { classes } = this.props;
