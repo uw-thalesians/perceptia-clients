@@ -1,6 +1,6 @@
 {
   "name": "perceptia",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "license": "MIT",
   "author": {
@@ -13,6 +13,12 @@
       "name": "Christopher James Kites",
       "email": "chriskites@gmail.com",
       "url": "christopherkites.com"
+    },
+    {
+      "name": "Nuo Chen"
+    },
+    {
+      "name": "Ken Long"
     }
   ],
   "dependencies": {
@@ -23,7 +29,6 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.1",
-    "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
