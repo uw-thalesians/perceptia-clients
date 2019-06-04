@@ -1,50 +1,49 @@
 import React from 'react';
-
 import { Close } from '@material-ui/icons';
 import green from '@material-ui/core/colors/green';
 import { IconButton, SnackbarContent } from '@material-ui/core';
 
-import Spinner from './Spinner';
+import { Spinner } from './';
 
 
 const success = {
-    backgroundColor: green[600],
+  backgroundColor: green[600],
 };
 const icon = {
-    fontSize: 20,
+  fontSize: 20,
 };
 const message = {
-    display: 'flex',
-    alignItems: 'center',
+  display: 'flex',
+  alignItems: 'center',
 };
 
 const center = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 function SnackBar(props) {
 
-    return (
-        <div style={center}>
-            <SnackbarContent
-                style={success}
-                aria-describedby="client-snackbar"
-                message={
-                <span id="client-snackbar" style={message}>
+  return (
+    <div style={center}>
+      <SnackbarContent
+        style={success}
+        aria-describedby="client-snackbar"
+        message={
+          <span id="client-snackbar" style={message}>
                     <Spinner />
-                    {props.text}
+            {props.text}
                 </span>
-                }
-                action={[
-                <IconButton key="close" aria-label="Close" color="inherit" onClick={() => {props.onClickClose();}}>
-                    <Close style={icon} />
-                </IconButton>
-                ]}
-            />
-        </div>
-    );
+        }
+        action={[
+          <IconButton key="close" aria-label="Close" color="inherit" onClick={() => {props.onClickClose();}}>
+            <Close style={icon} />
+          </IconButton>
+        ]}
+      />
+    </div>
+  );
 }
 
 export default SnackBar;

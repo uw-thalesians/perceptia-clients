@@ -10,10 +10,13 @@ import QuizGallery from './QuizGallery.js';
 import QuizInfo from './QuizInfo.js';
 import Results from './Results.js';
 import Study from './Study.js';
+import SearchBar from './SearchBar';
+import SnackBar from './SnackBar';
+import Spinner from './Spinner';
 
 export {
   Footer, NavBar,
   Question, QuestionView, QuizGallery, QuizInfo,
-  Results, Study
+  Results, SearchBar, SnackBar, Spinner, Study
 };
 

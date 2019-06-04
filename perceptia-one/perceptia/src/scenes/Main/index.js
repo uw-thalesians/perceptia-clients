@@ -2,10 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 import {Switch, Route} from "react-router-dom";
 import { Container, withStyles } from '@material-ui/core';
+
 import { Footer, NavBar, QuestionView, QuizGallery } from "components/";
 import ErrorBoundary from 'components/ErrorBoundary/';
 import NotFound from 'components/NotFound/';
-import Sign from 'scenes/Sign/';
 
 
 const routes = {
@@ -45,7 +45,7 @@ class Main extends React.Component {
             <Switch>
               <Route exact path={routes.root} component={QuizGallery}/>
               <Route path={[routes.quizMode, routes.studyMode]} component={QuestionView}/>
-              <Route path={[routes.sign.signUp, routes.sign.signIn]} render={() => <Sign routes={routes.sign}/>}/>
+              {/*<Route path={[routes.sign.signUp, routes.sign.signIn]} render={() => <Sign routes={routes.sign}/>}/>*/}
               <Route component={NotFound}/>
             </Switch>
           </Container>
